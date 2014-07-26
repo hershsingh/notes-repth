@@ -1,0 +1,47 @@
+%! TEX root=./linal.tex
+\documentclass[a4paper]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\usepackage[T1]{fontenc}
+
+\usepackage{cite}
+\usepackage{bm} 
+
+% For compact lists. Provides the environments 
+%   itemize*, enumerate*, description*
+% with lesser spacing between items.
+\usepackage{mdwlist} 
+\usepackage{enumerate} 
+
+\usepackage{mathtools} % For 'Aboxed' command
+
+% Theorem-like environments
+\usepackage{amsthm}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{lemma}{Lemma}
+
+
+% Making notes
+\newcommand{\todo}[1]{{\color{blue}[Todo] #1}}
+\newcommand{\tocheck}[1]{{\color{red} #1}}
+\newcommand{\comment}[1]{{\color{cyan} #1}}
+% Commnonly used sets
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\uhp}{\mathcal{H}}
+\newcommand{\SL}{\text{SL}}
+
+% This compactifies a list by removing unnecessary whitespace
+\newcommand\makethislistcompact{
+        \setlength{\itemsep}{0pt}%
+        \setlength{\parskip}{0pt}%
+        %\setlength{\topsep}{50pt} 
+        %\setlength{\partopsep}{10pt}
+        %\setlength{\parsep}{50pt}
+}
