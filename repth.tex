@@ -1,0 +1,114 @@
+\documentclass[a4paper]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{amscd}
+\usepackage{color}
+
+% Framed environments
+\usepackage[framemethod=tikz]{mdframed}
+
+% Preamble
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator{\Image}{Im}
+\DeclareMathOperator{\Coker}{Coker}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Sym}{Sym}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}
+
+\renewcommand{\>}{\rangle}
+\newcommand{\<}{\langle}
+
+% Environment for "physical insights"
+\newenvironment{insight}
+  {\begin{mdframed}[%style=2,%
+      leftline=true,
+      rightline=true,
+      topline=false,
+      bottomline=false,
+      leftmargin=10em,
+      rightmargin=2em,%
+      innerleftmargin=1em,
+      innerrightmargin=1em,
+      linewidth=2pt,%
+      linecolor=white!70!black,%
+      %backgroundcolor=white!99!black, %
+      skipabove=7pt,skipbelow=7pt]\small}
+  {\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Title
+\title{Representation Theory}
+\author{Hersh Singh}
+\begin{document}
+\maketitle
+\chapter{Representations of Finite Groups}
+\section{Definitions}
+\label{sec:definitions}
+
+Let $G$ be a finite group, $V$ be a finite dimensional complex vector space.
+
+A \emph{representation} of $G$ on $V$ is a group homomorphism 
+\begin{align}
+    \rho:  G\to \GL(V), 
+\end{align}
+where $\GL(V)$ is the group of automorphisms of $V$. Even though the ``representation" is really the homomorphism, but it is common (especially by physicists) to refer to $V$ itself as the representation. 
+
+\begin{insight}
+We say that this map gives $V$ the structure of a G-module. This agrees with the  definition of a R-module (R is a ring) that I have studied earlier. An R-module is simply a vector space defined over a ring, instead of a field. So the ring elements act as the \emph{scalars}. Of course, the description must include a rule for the `interaction' of the scalars with the vectors. To be a module, the interaction must be \emph{linear}.  
+In this case, the group homomorphism $\rho$ gives us that rule of interaction between the vectors (elements of $V$) and the scalars (elements of $G$). For $g\in G, v \in V$, $$gv\equiv\rho(g)v \in V$$
+\end{insight}
+
+A vector space homomorphism $\phi: V\to W$ is a morphism between the two representations $V$ and $W$ if the following diagram commutes:
+\begin{equation} \begin{CD}
+  V @>\phi>> W\\
+  @VgVV @VVgV\\
+  V @>\phi>> W\\
+\end{CD} \end{equation}
+
+That is, $\phi g=g\phi$ for all $g\in G$. This makes the group elements \emph{behave like scalars under module homomorphisms}. Such morphisms of representations are also called $G$-\emph{linear map} or a \emph{$G$ intertwiner}.
+
+\begin{insight}
+   Why is this is a good definition? Seems to be inspired from module homomorphisms. This is natural in some sense - Figure that out.
+\end{insight}
+
+$\Ker \phi,\ \Image \phi,\ \Coker \phi = V/\Image\phi$ are also $G$-modules. This is solely because of the commutativity of the above diagram.
+\begin{itemize}
+    \item If $v\in \Ker \phi$, then $\phi(gv) = g\phi(v) = 0$. So $gv$ also $\in \Ker \phi$. $\blacksquare$.
+    \item If $v\in \Image \phi$, then let $\phi(v) = w$. So $\phi(gv)=g\phi(v)=gw \in W$. So $gv$ also $\in \Image \phi$. $\blacksquare$.
+\end{itemize}
+
+One of the goals of our study is, given a representation, to develop tools for constructing other, preferably all, representations of the group. 
+Some examples of representations that can be constructed from $V$ and $W$
+
+\begin{itemize}
+    \item Tensor product $V\otimes W$ via
+        \begin{align}
+            g(v\otimes w) = g(v) \otimes g(w)
+        \end{align}
+    \item Tensor power $V^{\otimes n}$ and the \emph{exterior power}  $\Lambda^n(V)$ and the \emph{symmetric power} $\Sym^n(V)$ are its subrepresentations.
+    \item the dual $V^* = \Hom(V,\CC)$. This is a little tricky though. The action of $G$ on $V^*$ must be such that it preserves the natural inner product, denoted by $\<\ ,\ \>$, between them.  This forces us to define the action of $g$ such that 
+        \begin{align*}
+            \rho^*(v^*) &=
+        \end{align*}
+\end{itemize}
+
+\chapter{General Information}
+
+
+\section{Resources}
+\label{sec:Resources}
+Here are some resources that I found useful while preparing these notes
+\begin{itemize}
+    \item Representation Theory - A First Course by \emph{Fulton, Harris}
+\end{itemize}
+
+
+
+
+
+
+
+\end{document}
