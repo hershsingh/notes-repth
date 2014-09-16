@@ -1,4 +1,6 @@
-\documentclass[a4paper]{book}
+\documentclass[a4paper,oneside]{book} 
+% the 'oneside' option makes viewing on a computer easier, as both inner and outer margins are equal. Change this while printing.
+
 \usepackage{amsmath,amssymb}
 \usepackage{hyperref}
 \usepackage{amscd}
@@ -38,20 +40,21 @@
 \usepackage[framemethod=tikz]{mdframed}
 
 % Common operators
-\DeclareMathOperator\GL{GL}
-\DeclareMathOperator{\Image}{Im}
-\DeclareMathOperator{\Coker}{Coker}
-\DeclareMathOperator{\Ker}{Ker}
-\DeclareMathOperator{\Tr}{Tr}
-\DeclareMathOperator{\Hom}{Hom}
-\DeclareMathOperator{\End}{End}
-\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator\GL{GL}  % General Linear Group
+\DeclareMathOperator{\Image}{Im} % Image
+\DeclareMathOperator{\Coker}{Coker} % Cokernel 
+\DeclareMathOperator{\Ker}{Ker} % Kernel
+\DeclareMathOperator{\Tr}{Tr} % Trace
+\DeclareMathOperator{\Hom}{Hom} % Homomorphisms
+\DeclareMathOperator{\End}{End} % Endomorphisms
+\DeclareMathOperator{\Aut}{Aut} % Automorphisms
 % Some common representations
-\DeclareMathOperator{\Sym}{Sym}
-\DeclareMathOperator{\Alt}{\Lambda}
-\DeclareMathOperator{\sgn}{sgn}
-\DeclareMathOperator{\triv}{triv}
-\DeclareMathOperator{\std}{std}
+\DeclareMathOperator{\Sym}{Sym} % Symmetric product
+\DeclareMathOperator{\Alt}{\Lambda} % Exterior product
+\DeclareMathOperator{\sgn}{sgn} % Alternating representation
+\DeclareMathOperator{\triv}{triv} % Trivial representation
+\DeclareMathOperator{\std}{std} % Standard representation
+\DeclareMathOperator{\Ind}{Ind} % Induced representation 
 % Commonly used sets
 \newcommand{\CC}{\mathbb{C}}
 \newcommand{\RR}{\mathbb{R}}
@@ -75,7 +78,7 @@
       rightline=true,
       topline=false,
       bottomline=false,
-      leftmargin=10em,
+      leftmargin=2em,
       rightmargin=2em,%
       innerleftmargin=1em,
       innerrightmargin=1em,
@@ -147,7 +150,7 @@ Some examples of representations that can be constructed from $V$ and $W$
         \end{align}
         where I have written $\rho_g=\rho(g)$ for a cleaner notation, and $u^*\in V^*,\ v\in V$. 
         \begin{insight}
-            Remember the definition of the tranpose map. If we have a map $f: V\to W$, then the tranpose of $\rho$ is a map $^t\rho: W^*\to V^*$ such that
+            Remember the definition of the transpose map. If we have a map $f: V\to W$, then the transpose of $\rho$ is a map $^t\rho: W^*\to V^*$ such that
             \begin{align}
                 ^tf(\phi) = f\cdot \phi \quad\quad\forall \phi\in W^*.
             \end{align}
@@ -400,8 +403,75 @@ So, now we have a way of finding the direct sum of the trivial subreprentations 
 \end{insight}
 
 \begin{align}
-    \dim V^G = \Tr (\varphi)
+    \dim V^G &= \Tr (\varphi)\\
+        &= \frac{1}{|G|}\sum_{g\in G} \Tr(g)\\
+        &= \frac{1}{|G|}\sum_{g\in G}\chi_V(g)
+        \label{eqn:dimV_G}
 \end{align}
+In particular, if $V$ is irreducible, then it has no trivial subrepresentations and thus
+\begin{align}
+    \sum_{g\in G} \chi_V(g) &= 0\quad\quad\text{if $V$ is an nontrivial irrep}.
+\end{align}
+
+We know that $\Hom(V,W)^G$, the set of all homorphisms $V\to W$ fixed under $G$, is just the space of all $G$-linear maps $V\to W$. [\Todo{reference here.}]
+\begin{insight}
+    Given a $G$-linear map $\phi: V\to W$, where $V$ is a an irrep, $\phi$ defines an isomorphism between $V$ and $\Image(\phi)$ (since $\ker \phi$ is a subrepresentation of $V$, and so must be $\{0\}$) Now, other such $\phi$ would give us copies of $V$ in $W$. \Todo{The dimensionality of the space $\Hom_G(V,W)$ thus tells us the multiplicity of $V$ in $W$.}
+\end{insight}
+
+By Schur's lemma, if $V$ and $W$ are both irreducible then
+\begin{equation}
+    \dim \Hom_G(V,W) = 
+        \begin{cases}    
+            1   &\text{if } V\isomorphic W \\
+            0   &\text{if } V\ncong  W
+        \end{cases}
+\end{equation}
+Since we have $\Hom_G(V,W)\isomorphic V^*\otimes W$,
+\begin{align}
+    \chi_{\Hom_G(V,W)}(g) &= \overline{\chi_V(g)}\cdot\chi_W(g)
+\end{align}
+Using \eqref{eqn:dimV_G} here, we get the nice result
+\begin{align}
+        %\frac{1}{|G|}\sum_{g\in G}\chi_V(g) &= 
+        \frac{1}{|G|}\sum_{g\in G} \overline{\chi_V(g)}\cdot\chi_W(g) 
+        &= \begin{cases}    
+            1   &\text{if } V\isomorphic W \\
+            0   &\text{if } V\ncong  W
+        \end{cases}
+\end{align}
+This inspires us to define a dot product on the space of all class functions (functions that are defined on the conjugacy classes of a group) of $G$,
+\begin{align}
+    \CC_{\text{class}}(G) &= \{\text{class functions on $G$}\},
+\end{align}
+as
+\begin{align}
+    (\alpha,\beta) &= \frac{1}{|G|} \sum_{g\in G} \overline{\alpha(g)} \beta(g).
+    \label{eqn:dotproduct_classfunctions}
+\end{align}
+In respect this dot product, the characters of irreps are orthornormal.
+
+\chapter{Induced Reprentations}
+\label{cha:induced_reprentations}
+
+Given a subgroup $H\subset G$, and $(\rho_V, V)$, a representation of $G$, we can easily construct a representation for $H$ by simply restricting $\rho_V$ to $H$, which we denote by $\rho_V|_H$.
+
+
+However, if want to construct a representation of $G$ from a representation of $H$, then we need to think a little more about it. 
+
+Think of the elements of $V$ as functions of $G$, that is, every element $v\in V$ defines a map $v: G\to V$ given by
+\begin{align}
+    v(g) &= \rho(g) v.
+\end{align}
+Now, we already know how $v(\cdot)$ acts on $H$. We want to extend that action to $G$. The least we could do is to ensure that the action on $G$ is consistent with the known action on $H$. So, we enforce that
+\begin{align}
+    v(hg) = h\cdot v(g) &= \rho_V(h) v(g)\quad \forall h\in H,\ g\in G.
+\end{align}
+
+\begin{insight}\Todo{
+    Why is $\Ind_H^G{V}$ naturally isomorphic to $\Hom_H(k[G],V)$?
+    }
+\end{insight}
+
 
 
 
