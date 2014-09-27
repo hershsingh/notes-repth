@@ -1,53 +1,7 @@
-\documentclass[a4paper,oneside]{book} 
-% the 'oneside' option makes viewing on a computer easier, as both inner and outer margins are equal. Change this while printing.
+\input{preamble.tex}
 
-\usepackage{amsmath,amssymb}
-\usepackage{hyperref}
-\usepackage{amscd}
-\usepackage{amsthm}
-\usepackage{color}
+\usepackage[vcentermath]{youngtab} % Excellent package for young diagrams
 
-\usepackage{enumerate} % Customize the enumerate environment
-\usepackage{mathtools} % for \prescript
-
-% Theorem-like environments
-\newtheorem{theorem}{Theorem}
-\newtheorem{definition}{Definition}
-\newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
-
-% TikZ
-\usepackage{tikz}
-\usetikzlibrary{positioning}
-% Tikz Style for Commutative Diagrams
-\tikzset{
-    commutative diagram/.style={
-            node distance=2cm,auto,
-            arrow/.style={-stealth},
-            exists/.style={-stealth,densely dotted}
-        }
-    }
-
-% This compactifies a list by removing unnecessary whitespace
-\newcommand\makethislistcompact{
-        \setlength{\itemsep}{0pt}%
-        \setlength{\parskip}{0pt}%
-        %\setlength{\topsep}{50pt} 
-        %\setlength{\partopsep}{10pt}
-        %\setlength{\parsep}{50pt}
-}
-% Framed environments
-\usepackage[framemethod=tikz]{mdframed}
-
-% Common operators
-\DeclareMathOperator\GL{GL}  % General Linear Group
-\DeclareMathOperator{\Image}{Im} % Image
-\DeclareMathOperator{\Coker}{Coker} % Cokernel 
-\DeclareMathOperator{\Ker}{Ker} % Kernel
-\DeclareMathOperator{\Tr}{Tr} % Trace
-\DeclareMathOperator{\Hom}{Hom} % Homomorphisms
-\DeclareMathOperator{\End}{End} % Endomorphisms
-\DeclareMathOperator{\Aut}{Aut} % Automorphisms
 % Some common representations
 \DeclareMathOperator{\Sym}{Sym} % Symmetric product
 \DeclareMathOperator{\Alt}{\Lambda} % Exterior product
@@ -55,38 +9,6 @@
 \DeclareMathOperator{\triv}{triv} % Trivial representation
 \DeclareMathOperator{\std}{std} % Standard representation
 \DeclareMathOperator{\Ind}{Ind} % Induced representation 
-% Commonly used sets
-\newcommand{\CC}{\mathbb{C}}
-\newcommand{\RR}{\mathbb{R}}
-\newcommand{\ZZ}{\mathbb{Z}}
-
-\renewcommand{\>}{\rangle}
-\newcommand{\<}{\langle}
-
-% Some semantically named symbols
-\newcommand\isomorphic\cong
-
-% Meta-notes
-\newcommand\Solution[2]{\emph{[Solution to Exercise #1 in #2]}}
-\newcommand\Todo[1]{\begin{color}{red}{#1}\end{color}}
-
-
-% Environment for "physical insights"
-\newenvironment{insight}
-  {\begin{mdframed}[%style=2,%
-      leftline=true,
-      rightline=true,
-      topline=false,
-      bottomline=false,
-      leftmargin=2em,
-      rightmargin=2em,%
-      innerleftmargin=1em,
-      innerrightmargin=1em,
-      linewidth=2pt,%
-      linecolor=white!70!black,%
-      %backgroundcolor=white!99!black, %
-      skipabove=7pt,skipbelow=7pt]\small}
-  {\end{mdframed}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -452,9 +374,10 @@ In respect this dot product, the characters of irreps are orthornormal.
 
 \chapter{Induced Reprentations}
 \label{cha:induced_reprentations}
+\Todo{Don't really understand the motivation for this section.}
+\emph{Reference: Etingof.}
 
 Given a subgroup $H\subset G$, and $(\rho_V, V)$, a representation of $G$, we can easily construct a representation for $H$ by simply restricting $\rho_V$ to $H$, which we denote by $\rho_V|_H$.
-
 
 However, if want to construct a representation of $G$ from a representation of $H$, then we need to think a little more about it. 
 
@@ -472,11 +395,18 @@ Now, we already know how $v(\cdot)$ acts on $H$. We want to extend that action t
     }
 \end{insight}
 
-
-
-
-
-
+\chapter{Representations of \texorpdfstring{$S_n$}{Sn}}
+\label{cha:representations_of_s_n_s_n_}
+\begin{enumerate}
+    \item Define the standard Young tableau, given by a partition $\lambda$.
+    \item Define the subgroups $A_\lambda,\, B_\lambda$ of $S_n$ that act only on rows and columns of the tableau, respectively.
+    \item Define the \textbf{Young symmtrizer},
+        \begin{align}
+            c_\lambda = \sum_{\substack{\alpha\in A,\, \beta\in B}} \alpha \beta \sgn(\beta).
+        \end{align}
+    \item For some $x\in G$, if $\alpha x \sgn(\beta)\beta = x$ for all $\alpha\in A,\, \beta\in B$, then $x$ is a scalar multiple of $c_\lambda$.
+    \item The set $\{(\CC S_n )c_\lambda : \lambda \text{ is a partition of } S_n\}$, with $S_n$ acting on the left by multiplication, is the set of all representations of $S_n$.
+\end{enumerate}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
