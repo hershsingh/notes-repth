@@ -1,6 +1,7 @@
 \input{preamble.tex}
 
 \usepackage[vcentermath]{youngtab} % Excellent package for young diagrams
+\setcounter{secnumdepth}{1}
 
 % Some common representations
 \DeclareMathOperator{\Sym}{Sym} % Symmetric product
@@ -407,6 +408,44 @@ Now, we already know how $v(\cdot)$ acts on $H$. We want to extend that action t
     \item For some $x\in G$, if $\alpha x \sgn(\beta)\beta = x$ for all $\alpha\in A,\, \beta\in B$, then $x$ is a scalar multiple of $c_\lambda$.
     \item The set $\{(\CC S_n )c_\lambda : \lambda \text{ is a partition of } S_n\}$, with $S_n$ acting on the left by multiplication, is the set of all representations of $S_n$.
 \end{enumerate}
+
+\chapter{Campbell-Baker-Hausdorff}
+\section{}
+
+\subsection{Universal enveloping algebra}
+\label{sub:universal_enveloping_algebra}
+
+A \emph{universal enveloping algebra} is, in some sense, the most general associative algebra which contains a given lie algebra. 
+
+Let $U(L)$ be an associative algebra with unit and $L$ be a lie algebra. $U(L)$ is the universal enveloping algebra if we have a map $\epsilon: L\to U(L)$ such that
+\begin{enumerate}
+    \makethislistcompact
+    \item $\epsilon$ is Lie algebra homomorphism. This means that it is linear and it preserves the Lie bracket:
+        \begin{align}
+            \epsilon[x,y] &= \epsilon(x)\epsilon(y) - \epsilon(y) \epsilon(x)
+        \end{align}
+    \item it satisfies a \emph{universal property}. If $A$ is any associative algebra with unit and $\alpha: L \to A $ is any Lie algebra then there exists a unique $\phi: U(L)\to A$ such that the following diagram commutes.
+        \begin{center}
+            \begin{tikzpicture}[commutative diagram]
+                \node (L) {$L$};
+                \node (UL) [below right of=L] {$U(L)$};
+                \node (A) [below left of=L] {$A$};
+                \draw [arrow] (L) --(UL) node [midway, auto=left] {$\epsilon$};
+                \draw [arrow] (L) --(A) node [midway, auto=right] {$\alpha$};
+                \draw [arrow, dashed] (UL) --(A) node [midway, auto=below] {$\exists!\ \phi$};
+            \end{tikzpicture}
+        \end{center}
+\end{enumerate}
+\begin{insight}
+    Given $(\epsilon_1, U_1)$ and $(\epsilon_2,U_2)$ we can see get maps $\phi_1: U_1\to U_2$  and $\phi_2: U_2\to U_1$ such that 
+    $\phi_1\cdot\phi_2$ is identity \Todo{on $\epsilon_1(L)$} and 
+    $\phi_2\cdot\phi_1$ is identity \Todo{on $\epsilon_2(L)$}. How can we say that their composition is identity on the whole of $U_1$ and $U_2$?
+
+\end{insight}
+            
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
