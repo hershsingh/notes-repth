@@ -11,9 +11,23 @@
 \DeclareMathOperator{\std}{std} % Standard representation
 \DeclareMathOperator{\Ind}{Ind} % Induced representation 
 
+% Some common maps
+\DeclareMathOperator{\id}{id}
+
+\DeclareMathOperator{\gr}{gr}
+
+% Semantic stuff
+\newcommand{\onto}{\twoheadrightarrow}
+
 % Some common lie algebras
-\newcommand{\gl}{\mathfrak{gl}}
+\newcommand{\LieGL}{\mathfrak{gl}}
+\newcommand{\LieA}{\mathfrak{a}}
+\newcommand{\LieB}{\mathfrak{b}}
+\newcommand{\LieG}{\mathfrak{g}}
 %\newcommand{\sl}{\mathfrak{sl}}
+
+% Some common lie algebra ideals
+\DeclareMathOperator\Rad{Rad}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -379,6 +393,18 @@ In respect this dot product, the characters of irreps are orthornormal.
 
 \chapter{Induced Reprentations}
 \label{cha:induced_reprentations}
+
+\section{Overview}
+%\label{sec:overview}
+\begin{enumerate}
+    \makethislistcompact
+    \item Define induced representations
+    \item Mackay formula for the character of an induced representation.
+    \item Frobenius Reciprocity
+\end{enumerate}
+
+\section{Definitions}
+
 \Todo{Don't really understand the motivation for this section.}
 \emph{Reference: Etingof.}
 
@@ -401,8 +427,25 @@ Now, we already know how $v(\cdot)$ acts on $H$. We want to extend that action t
 \end{insight}
 
 \chapter{Representations of \texorpdfstring{$S_n$}{Sn}}
-\label{cha:representations_of_s_n_s_n_}
+\label{cha:representations_of_s_n}
+
+
+
+\section{Overview}
+
 \begin{enumerate}
+    \makethislistcompact
+    \item Represenations of $S_n$
+    \item Frobenius Formula for the character/dimension of a representation of $S_n$
+    \item Schur Functors
+\end{enumerate}
+
+\section{Representations}
+%\label{sec:representations}
+
+
+\begin{enumerate}
+    \makethislistcompact
     \item Define the standard Young tableau, given by a partition $\lambda$.
     \item Define the subgroups $A_\lambda,\, B_\lambda$ of $S_n$ that act only on rows and columns of the tableau, respectively.
     \item Define the \textbf{Young symmtrizer},
@@ -412,6 +455,44 @@ Now, we already know how $v(\cdot)$ acts on $H$. We want to extend that action t
     \item For some $x\in G$, if $\alpha x \sgn(\beta)\beta = x$ for all $\alpha\in A,\, \beta\in B$, then $x$ is a scalar multiple of $c_\lambda$.
     \item The set $\{(\CC S_n )c_\lambda : \lambda \text{ is a partition of } S_n\}$, with $S_n$ acting on the left by multiplication, is the set of all representations of $S_n$.
 \end{enumerate}
+
+
+\chapter{A Detour to Differential Geometry}
+\label{cha:a_small_detour_to_differential_geometry}
+
+\begin{enumerate}
+    \makethislistcompact
+    \item Manifolds
+    \item Morphism of manifolds -  Smooth mappings etc
+    \item Types of submanifolds - Immersion, Embedding etc
+    \item Tangent Spaces
+    \item Differential forms
+\end{enumerate}
+
+
+
+
+\chapter{Lie Groups}
+\label{cha:lie_groups}
+
+\section{Overview}
+\label{sec:overview}
+
+\begin{enumerate}
+    \makethislistcompact
+    \item Define Lie groups
+    \item Two principles
+    \item Vector fields, differential forms
+    \item The Lie bracket: two ways to define it.
+    \item The transition: Lie groups $\to$  Lie algebras
+    \item Adjoint representation
+    \item Examples of Lie algebras - from classical groups
+    \item Exponential map
+    \item Apply the exponential map to Lie groups
+\end{enumerate}
+
+
+
 
 \chapter{Campbell-Baker-Hausdorff}
 \section{}
@@ -453,14 +534,22 @@ Let $U(L)$ be an associative algebra with unit and $L$ be a lie algebra. $U(L)$ 
     Given $(\epsilon_1, U_1)$ and $(\epsilon_2,U_2)$ we can see get maps $\phi_1: U_1\to U_2$  and $\phi_2: U_2\to U_1$ such that 
     $\phi_1\cdot\phi_2$ is identity \Todo{on $\epsilon_1(L)$} and 
     $\phi_2\cdot\phi_1$ is identity \Todo{on $\epsilon_2(L)$}. 
+    But $\epsilon(L)$ generates $U(L)$, and $\phi$ is a associative algebra homomorphism, so 
+    \begin{align}
+        \phi\left(\sum \epsilon(x_1)\cdots\epsilon(x_n)\right) &= \sum \phi(\epsilon(x_1))\cdots\phi(\epsilon(x_n))\\
+            &= \sum \epsilon(x_1)\cdots\epsilon(x_n).
+    \end{align}
+    Thus the compositions are identity on the whole of $U_1$ and $U_2$.
     
-    \Todo{How can we say that their composition is identity on the whole of $U_1$ and $U_2$?}
+    %\Todo{How can we say that their composition is identity on the whole of $U_1$ and $U_2$?}
 \end{insight}
 Universal enveloping algebras are unique upto an isomorphism due to this universal property.
 
 \subsection{Tensor Algebra}
 \label{sub:tensor_algebra}
 $i:V\to T(V)$ such that for any map $\alpha: V\to A$, where $A$ is an associative algebra, there exists an a map linear map $\psi: T(V)\to A$ such that the following diagram commutes
+
+
 
 \begin{center}
     \begin{tikzpicture}[commutative diagram]
@@ -551,17 +640,121 @@ Given map $h: L\to M$ between two lie algebras $L$ and $M$, the universal proper
     U(L_1\oplus L_2) &\isomorphic U(L_1) \otimes U(L_2)
 \end{align}
 
-\chapter{Lie Algebras}
-\label{cha:lie_algebras}
-\begin{theorem}[Ado's theorem]
-Every finite dimensional lie algebra is a subalgebra of $\gl(V)$.
+\subsection{Bialgebra structure}
+\label{sub:bialgebra_structure}
+\begin{definition}[Bialgebra]
+A vector space $C$ with a map (\emph{comultiplication}) $\Delta: C\to C\otimes C$ and a map (\emph{co-unit}) $\varepsilon: D\to k$ satisfying
+\begin{align}
+    (\varepsilon\otimes \id) \circ \Delta &= \id \quad\text{and} \\
+    (\id\otimes \varepsilon) \circ \Delta &= \id
+\end{align}
+is called a \emph{co-algebra}. If $C$ is an algebra and both $\Delta$ and $\varepsilon$ are algebra homomorphisms, we say that $C$ is a \emph{bi-algebra}.
+    
+\end{definition}
+
+Let $L$ be any lie algebra. The map $f: L\to U(L)\otimes U(L)$ defined by
+\begin{align}
+    x\mapsto f(x)=x\otimes 1 + 1\otimes x
+\end{align}
+is a Lie algebra homomorphism. This can be seen by
+\begin{align}
+    f(x)f(y)- f(y)f(x) &= [x,y]\otimes 1 + 1\otimes [x,y]\\
+        &= f[x,y].
+    %f([x,y]) &= f(x\otimes y - y\otimes x) 
+\end{align}
+Thus this map induces a map $\Delta: U(L)\to U(L)\otimes U(L)$ as seen in the following commutative diagram.
+\begin{center}
+\begin{tikzpicture}[commutative diagram]
+    \node (L) {$L$};
+    \node (ULxUL) [below right of=L] {$U(L)\otimes U(L)$};
+    \node (UL) [below left of=L] {$U(L)$};
+    \draw [arrow] (L) -- (ULxUL) node [midway, auto=left] {$f$};
+    \draw [arrow] (L) -- (UL) node [midway, auto=right] {$\epsilon$};
+    \draw [arrow, dashed] (UL) -- (ULxUL) node [midway, below] {$\exists! \Delta$};
+\end{tikzpicture}
+\end{center}
+Now, define the map $\varepsilon: U(L)\to k$ as
+\begin{equation}
+    \epsilon(x) = \begin{cases} 
+        1 &\text{if } x=1,\\
+        0 &\text{for all } x\in L
+    \end{cases}
+\end{equation}
+and extend this as an algebra homorphism.
+\begin{proposition}
+   $(U(L), \Delta, \varepsilon)$  is a bialgebra.
+\end{proposition}
+\begin{proof}
+    \Todo{complete this} 
+\end{proof}
+
+\subsection{The Poincar\'e-Birkhoff-Witt Theorem.}
+\label{sub:the_poincar'e_birkhoff_witt_theorem_}
+
+\Todo{Complete this section.}
+
+\begin{theorem}[Poincar\'e-Birkhoff-Witt]
+    \begin{align}
+        S(L) \isomorphic \gr U(L)
+    \end{align}
 \end{theorem}
 
-Let's make the following definitions
 
 
 
+\chapter{Lie Algebras}
+\label{cha:lie_algebras}
+In this chapter, we undertake a systematic study of Lie algebras and attempt to classify them.
 
+
+\begin{theorem}[Ado's theorem]
+Every finite dimensional lie algebra is a subalgebra of $\LieGL(V)$.
+\end{theorem}
+
+Let's make a few definitions.
+\begin{align}
+    D\LieG &= [\LieG, \LieG] &\text{}\\
+    D_k\LieG &= [\LieG, D_{k-1}\LieG] &\text{lower central series}\\
+    D^k\LieG &= [D^{k-1}\LieG, D^{k-1}\LieG] &\text{derived series}
+\end{align}
+
+\begin{definition} A lie algebra $\LieG$ is 
+    \begin{enumerate}[(i)]
+        \makethislistcompact
+        \item \textbf{nilpotent} if $D_k\LieG=0$ for some $k$,
+        \item \textbf{solvable} if $D^k\LieG=0$ for some $k$, and
+        \item \textbf{semi-simple} if it has no non nonzero solvable ideals.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Radical]
+    Sum of all solvable ideals in $\LieG$ is again a solvable ideal, called the the \textbf{radical} of $\LieG$ and denoted by $\Rad(\LieG)$
+\end{definition}
+
+\begin{definition}[Reductive]
+    A lie algebra $\LieG$ is \textbf{reductive} if
+\end{definition}
+
+\begin{lemma}
+    $ (\mathfrak{a} + \mathfrak{b})/\mathfrak{b} \isomorphic \mathfrak a / (\mathfrak a \cap \mathfrak b) $
+\end{lemma}
+\begin{proof} The kernel of the composite map 
+   \begin{align}
+       \LieA + \LieB \onto \LieA \onto \LieA/(\LieA \cap \LieB)
+   \end{align} 
+   is the ideal $\LieB \in \LieA + \LieB$.
+\end{proof}
+
+
+Notice that the lie algebra $\LieG/\Rad(\LieG)$ is semisimple. Any lie algebra fits into the exact sequence
+\begin{align}
+    0\to \Rad(\LieG) \to \LieG \to \LieG/\Rad(\LieG) \to 0
+\end{align}
+where the first algebra is solvable and the last algebra is semisimple. Our approach to classify representations of Lie  algebras is then to study the representations of solvable and semisimple Lie algebras.
+
+\begin{theorem}[Lie's theorem]
+    
+\end{theorem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % APPENDICES
