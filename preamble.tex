@@ -1,12 +1,21 @@
-%! TEX root=./linal.tex
-\documentclass[a4paper]{book}
+\documentclass[a4paper,oneside]{book} 
+% the 'oneside' option makes viewing on a computer easier, as both inner and outer margins are equal. Change this while printing.
+
 \usepackage{amsmath,amssymb}
 \usepackage{hyperref}
+\usepackage{amscd}
+\usepackage{amsthm}
+\usepackage{color}
 
 \usepackage[T1]{fontenc}
 
+\usepackage{enumerate} % Customize the enumerate environment
+\usepackage{mathtools} % for \prescript
+
 \usepackage{cite}
 \usepackage{bm} 
+
+\usepackage[vcentermath]{youngtab} % Excellent package for young diagrams
 
 % For compact lists. Provides the environments 
 %   itemize*, enumerate*, description*
@@ -18,24 +27,27 @@
 
 % Theorem-like environments
 \usepackage{amsthm}
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}
+
+\theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
 \newtheorem{conjecture}{Conjecture}
 \newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
 
 
-% Making notes
-\newcommand{\todo}[1]{{\color{blue}[Todo] #1}}
-\newcommand{\tocheck}[1]{{\color{red} #1}}
-\newcommand{\comment}[1]{{\color{cyan} #1}}
-% Commnonly used sets
-\newcommand{\ZZ}{\mathbb{Z}}
-\newcommand{\RR}{\mathbb{R}}
-\newcommand{\CC}{\mathbb{C}}
-\newcommand{\HH}{\mathbb{H}}
-\newcommand{\FF}{\mathbb{F}}
-\newcommand{\uhp}{\mathcal{H}}
-\newcommand{\SL}{\text{SL}}
+% TikZ
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+% Tikz Style for Commutative Diagrams
+\tikzset{
+    commutative diagram/.style={
+            node distance=2cm,auto,
+            arrow/.style={-stealth},
+            exists/.style={-stealth,densely dotted}
+        }
+    }
 
 % This compactifies a list by removing unnecessary whitespace
 \newcommand\makethislistcompact{
@@ -45,3 +57,55 @@
         %\setlength{\partopsep}{10pt}
         %\setlength{\parsep}{50pt}
 }
+% Framed environments
+\usepackage[framemethod=tikz]{mdframed}
+
+% Common operators
+\DeclareMathOperator\GL{GL}  % General Linear Group
+\DeclareMathOperator{\Image}{Im} % Image
+\DeclareMathOperator{\Coker}{Coker} % Cokernel 
+\DeclareMathOperator{\Ker}{Ker} % Kernel
+\DeclareMathOperator{\Tr}{Tr} % Trace
+\DeclareMathOperator{\Hom}{Hom} % Homomorphisms
+\DeclareMathOperator{\End}{End} % Endomorphisms
+\DeclareMathOperator{\Aut}{Aut} % Automorphisms
+% Commonly used sets
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\uhp}{\mathcal{H}}
+\newcommand{\SL}{\text{SL}}
+
+\renewcommand{\>}{\rangle}
+\newcommand{\<}{\langle}
+
+% Some semantically named symbols
+\newcommand\isomorphic\cong
+
+% Meta-notes
+\newcommand\Solution[2]{\emph{[Solution to Exercise #1 in #2]}}
+\newcommand\Todo[1]{\begin{color}{red}{#1}\end{color}}
+\newcommand{\tocheck}[1]{{\color{red} #1}}
+\newcommand{\comment}[1]{{\color{cyan} #1}}
+
+% Environment for "physical insights"
+\newenvironment{insight}
+  {\begin{mdframed}[%style=2,%
+      leftline=true,
+      rightline=true,
+      topline=false,
+      bottomline=false,
+      leftmargin=2em,
+      rightmargin=2em,%
+      innerleftmargin=1em,
+      innerrightmargin=1em,
+      linewidth=2pt,%
+      linecolor=white!70!black,%
+      %backgroundcolor=white!99!black, %
+      skipabove=7pt,skipbelow=7pt]\small}
+  {\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
