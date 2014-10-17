@@ -1,5 +1,19 @@
 \input{preamble.tex}
 
+% Bibliography
+\usepackage[
+    backend=bibtex,
+    %style=authoryear-icomp,
+    style=alphabetic,
+    sortlocale=de_DE,
+    natbib=true,
+    url=false, 
+    doi=true,
+    eprint=false
+]{biblatex}
+\addbibresource{repth.bib}
+
+
 \usepackage[vcentermath]{youngtab} % Excellent package for young diagrams
 \setcounter{secnumdepth}{1}
 
@@ -18,6 +32,7 @@
 
 % Semantic stuff
 \newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\Lie}[1]{\mathfrak{#1}}
 
 % Some common lie algebras
 \newcommand{\LieGL}{\mathfrak{gl}}
@@ -29,6 +44,7 @@
 
 % Some common lie algebra ideals
 \DeclareMathOperator\Rad{Rad}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -738,8 +754,11 @@ Let's make a few definitions.
 \end{definition}
 
 \begin{definition}[Reductive]
-    A lie algebra $\LieG$ is \textbf{reductive} if
+    A lie algebra $\LieG$ is \textbf{reductive} if it is the direct sum of a semisimple lie algebra and an abelian lie algebra.
 \end{definition}
+\begin{insight}
+   It does not make much sense to classify lie algebras and keep $\Lie{gl}_n$ out of it. That's why we define reductive lie algebras. Even though $\Lie{gl}_n$ is not semi-simple, it is reductive as $\Lie{gl}_n = \Lie{sl}_n\oplus \Lie{t}$ is the direct sum of the traceless lie algebra with with the scalar lie algebra.
+\end{insight}
 
 \begin{lemma}
     $ (\mathfrak{a} + \mathfrak{b})/\mathfrak{b} \isomorphic \mathfrak a / (\mathfrak a \cap \mathfrak b) $
@@ -787,29 +806,172 @@ Reference: FH 8.3
 
 \begin{figure}[h]
     \centering
-    \begin{tikzpicture}[]
+    \begin{tikzpicture}[disc/.style={top color=white, bottom color=white!80!black}]
         \def\dist{0.2}
         \def\xrad{1}
         \def\yrad{0.3}
-        \draw [fill=white] (0,-13*\dist) ellipse [start angle=0, end angle=360, x radius=\xrad, y radius=\yrad] node (U) {};
-        \draw [-stealth, thick] (0,-7*\dist) -- (0,-11*\dist) node [midway, right] {$p$};
-        \draw [fill=white] (0,-5*\dist) ellipse [start angle=0, end angle=360, x radius=\xrad, y radius=\yrad] node (bottom) {};
+        \draw [disc] (0,-13*\dist) ellipse [start angle=0, end angle=360, x radius=\xrad, y radius=\yrad] node (U) {};
+        \draw [-stealth, thick] (0,-7*\dist) -- (0,-11*\dist) node [midway, right] {$\pi$};
+        \draw [disc] (0,-5*\dist) ellipse [start angle=0, end angle=360, x radius=\xrad, y radius=\yrad] node (bottom) {};
         \draw [dotted, very thick] (0,-5*\dist) -- (0,-\dist);
-        \draw [fill=white] (0,-\dist) ellipse [start angle=0, end angle=360, x radius=\xrad, y radius=\yrad];
-        \draw [fill=white] ellipse [start angle=0, end angle=360, x radius=\xrad, y radius=\yrad] node (top) {};
+        \draw [disc] (0,-\dist) ellipse [start angle=0, end angle=360, x radius=\xrad, y radius=\yrad];
+        \draw [disc] ellipse [start angle=0, end angle=360, x radius=\xrad, y radius=\yrad] node (top) {};
 
         \node [left of=U, node distance=1.7cm] {$U$};
 
         %\begin{scope}[shift={(-1.5cm,0cm)}]
         %\draw [decorate, decoration={brace, mirror, amplitude=2pt}] node [left of=top, node distance=1.5cm] {} -- node [left of=bottom] {};
         \def\xx{1.2cm}
-        \draw [decorate, decoration={brace, mirror, amplitude=4pt, raise=2pt}, thick] ($(top)- (\xx,0)$) -- ($(bottom) - (\xx,0)$) node [midway, left, xshift=-4pt] {$p^{-1}(U)$};
+        \draw [decorate, decoration={brace, mirror, amplitude=4pt, raise=2pt}, thick] ($(top)- (\xx,0)$) -- ($(bottom) - (\xx,0)$) node [midway, left, xshift=-4pt] {$\pi^{-1}(U)$};
         %\end{scope}
 
     \end{tikzpicture}
 \end{figure}
 
-Given a set 
+A covering space is a space $C$ with a continuous \emph{surjective} map 
+\begin{align}
+    \pi: C\to X
+\end{align}
+such that for any point $x\in X$, there exists an open neighbourhood $U$ of $x$ such that 
+\begin{align}
+    \pi^{-1}(U)   &=  \coprod U_\alpha \quad\text{and}\\
+    \pi|_{U_\alpha}&: U_\alpha \xrightarrow{\isomorphic} U
+\end{align}
+where the $U_\alpha$ are open sets and $\coprod$ is the disjoint union.
+\begin{insight}
+    Example 
+    \begin{align}
+        \RR\onto \RR/\ZZ
+    \end{align}
+    Every quotient is not a cover.
+\end{insight}
+
+\subsection{Universal Cover}
+\label{sub:universal_cover}
+
+
+A covering space is a \emph{universal covering space} if it is simply connected. 
+
+It is universal in the sense that if there is any other cover $C$ of $X$, then there is a covering map $f: D\to C$ such that following diagram commutes
+\begin{center}
+\begin{tikzpicture}[commutative diagram]
+    \node [] (X) {$X$};
+    \node [above left of=X] (D) {$D$};
+    \node [above right of=X](C) {$C$};
+
+    \draw [arrow] (D) -- (X) node [midway, auto=right] {$q$};
+    \draw [arrow, dashed] (D) -- (C) node [midway, above] {$f$};
+    \draw [arrow] (C) -- (X) node [midway, auto=left] {$\pi$};
+
+    \draw [->, opacity=0.3] (0,1) arc (90:-250:5pt);
+
+    
+\end{tikzpicture}
+\end{center}
+
+\begin{insight}
+   The universal cover of the space $X$ covers all the connected covers of the space $X$.
+\end{insight}
+
+\subsection{Second Principle}
+\label{sub:second_principle}
+
+Let $G$ and $H$ be Lie groups, $G$ is simply connected. Let $\LieG, \LieH$ be the associated Lie algebras. A linear map $\alpha: \LieG \to \LieH$ is the differential of a map $A: G\to H$ of Lie groups if and only if $\alpha$ is a map of Lie algebras.
+
+\begin{proposition}
+   A linear map $\alpha: \LieH \to \LieG$  is an isomorphism iff $A: H\to G$ is an isogeny.
+\end{proposition}
+
+\begin{proof}  {[\Todo {Sanitize; Lecture 10.17.2014}]} \\
+Isogeny implies that there exists a $U\ni I_h$, such that
+\begin{align}
+    \varphi|_U : U_h \xrightarrow{\ \isomorphic\ } \varphi(U_h)
+\end{align}
+is an isomorphism.
+Suppose, conversely, that $d\varphi: \LieH\to \LieG$ is an isomorphism. Then there exists a neibourhood $U\ni I_h$ such that $    \varphi: U\to \varphi(U)$ is an isomorphism.
+
+\begin{align}
+    \varphi^{-1} (I_g) &= \bigcup_\alpha h_\alpha 
+\end{align}
+If $h_\alpha \neq I$, then $h_\alpha \not\in U$. Therefore, $\bigcup h_\alpha$ is a disjoint union.
+
+
+Then $\coprod_\alpha U h_\alpha h\to \varphi(U)g$  is the cover of $U_g$ whenever $\varphi(h)=g$.
+
+\end{proof}
+
+\subsection{A bit on isogeny}
+\label{sub:a_bit_on_isogeny}
+
+Let $G$ be a group, $H$ a connected manifold. Let $\varphi: H\to G$ be a covering space map. Let $e' \mapsto e_G$. Then there exists a unique Lie group structure on $H$ such that  $e' = \id_H$ and $\varphi: H\to G$ is a Lie group morphism.
+
+\begin{proposition}
+   Let   
+\end{proposition}
+
+\begin{proof}[Proof of Second Pricniple]
+    \Todo{Complete this}
+\end{proof}
+
+\section{Rough Classification of Lie Algebras}
+\label{sec:rough_classification_of_lie_algebras}
+
+We have three major theorems in this section:
+\begin{enumerate}
+    \makethislistcompact
+    \item Engel's theorem,
+    \item Lie'e theorem,
+    \item Levi decomposition theorem,
+    \item Ado's theorem
+\end{enumerate}
+
+\subsection{Levi decomposition}
+\label{sub:levi_decomposition}
+
+We have the short exact sequence
+\begin{align}
+    \Rad \LieG \hookrightarrow \LieG \onto \LieG/\Rad\LieG
+\end{align}
+Levi's theorem basically states that this sequence splits, that is, there is an subspace $\Lie{l}$ such that
+\begin{align}
+    \LieG = \Lie{l}\oplus\Rad\LieG
+\end{align}
+
+\hrule\vspace{1em}
+\Todo{Sanitize; Lecture 10.17.2014}
+
+\begin{theorem}
+   Let $\LieG$  be a lie algebra with the radical $\Lie r$. There exists a subalgebra $\Lie l$ such that $\Lie g = \Lie l \oplus \Lie r$.
+\end{theorem}
+\begin{insight}
+    This looks very much like 
+    \begin{align}
+        \begin{pmatrix}  x& y \\ 0 & z \end{pmatrix} &= \begin{pmatrix} x & 0 \\ 0 & z \end{pmatrix} + \begin{pmatrix} 0 & y \\ 0 & 0  \end{pmatrix}
+    \end{align} 
+\end{insight}
+\begin{proof}
+    Reduction step: No non-zero ideal is properly contained in $\Lie r$. (Otherwise if $\Lie i\subset \Lie r, $) \Todo{....Complete this}
+\end{proof}
+
+\subsection{Engel's theorem}
+\label{sub:engel_s_theorem}
+
+\begin{theorem}[Engel]
+    
+\end{theorem}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -916,5 +1078,12 @@ Here are some resources that I found useful while preparing these notes
 \begin{itemize}
     \item Representation Theory - A First Course by \emph{Fulton, Harris}
 \end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%
+%  Bibliography  %
+%%%%%%%%%%%%%%%%%%
+\nocite{*} % Print all entries in the bib file
+\printbibliography
 
 \end{document}
