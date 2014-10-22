@@ -13,7 +13,6 @@
 ]{biblatex}
 \addbibresource{repth.bib}
 
-
 \usepackage[vcentermath]{youngtab} % Excellent package for young diagrams
 \setcounter{secnumdepth}{1}
 
@@ -411,8 +410,8 @@ In respect this dot product, the characters of irreps are orthornormal.
 \chapter{Induced Reprentations}
 \label{cha:induced_reprentations}
 
+This chapter is based heavily on \cite{etingof_introduction_2009}.
 \section{Overview}
-%\label{sec:overview}
 \begin{enumerate}
     \makethislistcompact
     \item Define induced representations
@@ -423,7 +422,6 @@ In respect this dot product, the characters of irreps are orthornormal.
 \section{Definitions}
 
 \Todo{Don't really understand the motivation for this section.}
-\emph{Reference: Etingof.}
 
 Given a subgroup $H\subset G$, and $(\rho_V, V)$, a representation of $G$, we can easily construct a representation for $H$ by simply restricting $\rho_V$ to $H$, which we denote by $\rho_V|_H$.
 
@@ -437,10 +435,25 @@ Now, we already know how $v(\cdot)$ acts on $H$. We want to extend that action t
 \begin{align}
     v(hg) = h\cdot v(g) &= \rho_V(h) v(g)\quad \forall h\in H,\ g\in G.
 \end{align}
+The trick is to take the space of \emph{all} such functions $v: G\to V$ that satisfy the above condition. If that turns out to be a representation, we would get the most \emph{free} representation. So, lets define 
+\begin{align}
+    \Ind_G^H(V) &= \{f: G\to V : v(gh)=\rho_V(h)v(g)\ \forall h\in H, g\in G\}.
+\end{align}
 
-\begin{insight}\Todo{
+\Todo{
+   Check this is indeed a representation. 
+   }
+
+
+\pagebreak
+\begin{insight}
     Why is $\Ind_H^G{V}$ naturally isomorphic to $\Hom_H(k[G],V)$?
-    }
+    An element of $\Hom_H(k[G],V)$ is just a $H$-module homomorphism $f: k[G]\to V$ such that
+    \begin{align}
+        f(hg)  = h\cdot f(g)
+        \implies f(hg) &= \rho(v) f(g)
+    \end{align}
+    All such $f$ are precisely all the elements in $\Ind_H^G(V)$.
 \end{insight}
 
 \chapter{Representations of \texorpdfstring{$S_n$}{Sn}}
@@ -940,7 +953,7 @@ Levi's theorem basically states that this sequence splits, that is, there is an 
 \hrule\vspace{1em}
 \Todo{Sanitize; Lecture 10.17.2014}
 
-\begin{theorem}
+\begin{theorem}[Levi's theorem]
    Let $\LieG$  be a lie algebra with the radical $\Lie r$. There exists a subalgebra $\Lie l$ such that $\Lie g = \Lie l \oplus \Lie r$.
 \end{theorem}
 \begin{insight}
@@ -950,15 +963,35 @@ Levi's theorem basically states that this sequence splits, that is, there is an 
     \end{align} 
 \end{insight}
 \begin{proof}
-    Reduction step: No non-zero ideal is properly contained in $\Lie r$. (Otherwise if $\Lie i\subset \Lie r, $) \Todo{....Complete this}
+    Reduction step: No non-zero ideal is properly contained in $\Lie r$. (Otherwise if $\Lie i\subset \Lie r$ then $\Lie r/\Lie i \in \Lie g/ \Lie l$) 
+     In particular, we can assume that $\Lie r $ is abelian (otherwise $0\neq D\Lie r\subset \Lie r$).
+
+     $D\Lie r$ is preserved by all derviations of $\LieG$ (that is, all linear maps $LieG\to LieG$ satisfying the Liebniz rule). In particular, $D\Lie r$ is a radical of $\LieG$.
+     So, $\Lie r$ is abelian. We may also assume that $[\Lie g, \Lie r]\neq 0$ (otherwise, )
+    
+    \Todo{....Complete this}.
+
+    
 \end{proof}
 
 \subsection{Engel's theorem}
 \label{sub:engel_s_theorem}
 
-\begin{theorem}[Engel]
-    
+\begin{theorem}[Engel's theorem]
+    Let $\LieG\in \LieGL(V)$ be any Lie subalgebra such that every $X\in \LieG$ is a nilpotent endomorphism of $V$. Then there exists a nonzero vector $v\in V$ such that $X(v)=0$ for all $X\in\LieG$.
 \end{theorem}
+\begin{corollary}
+    
+\end{corollary}
+    This implies that there exist a basis in which $\LieG$ is upper triangular.
+
+\subsection{Lie's Theorem}
+\label{sub:lie_s_theorem}
+\begin{theorem}[Lie's Theorem]
+    Let  $\LieG\in\LieGL(V)$ be a complex solvalbe Lie algebra. Then there exists a nonzero vector $v\in V$ that is an eigenvector of $X$ for all $X\in \LieG$.
+\end{theorem}
+
+
 
 
 
