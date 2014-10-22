@@ -12,7 +12,7 @@
 \usepackage{enumerate} % Customize the enumerate environment
 \usepackage{mathtools} % for \prescript
 
-\usepackage{cite}
+%\usepackage{cite}
 \usepackage{bm} 
 
 \usepackage[vcentermath]{youngtab} % Excellent package for young diagrams
@@ -32,14 +32,16 @@
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
 \newtheorem{conjecture}{Conjecture}
 \newtheorem{lemma}{Lemma}
 \newtheorem{proposition}{Proposition}
 
-
 % TikZ
 \usepackage{tikz}
 \usetikzlibrary{positioning}
+\usetikzlibrary{decorations.pathreplacing} % for curly braces
+\usetikzlibrary{calc} % for coordinate calculation
 % Tikz Style for Commutative Diagrams
 \tikzset{
     commutative diagram/.style={
