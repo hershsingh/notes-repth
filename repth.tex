@@ -1,11 +1,11 @@
 \input{preamble.tex}
 
-% Bibliography
+% Bibliography using BibLaTeX
 \usepackage[
     backend=bibtex,
     %style=authoryear-icomp,
     style=alphabetic,
-    sortlocale=de_DE,
+    sortlocale=en_US,
     natbib=true,
     url=false, 
     doi=true,
@@ -29,21 +29,29 @@
 
 \DeclareMathOperator{\gr}{gr}
 
+\DeclareMathOperator{\ad}{ad}
+
 % Semantic stuff
+\newcommand{\injects}{\hookrightarrow}
 \newcommand{\onto}{\twoheadrightarrow}
-\newcommand{\Lie}[1]{\mathfrak{#1}}
+\newcommand{\germs}{\mathcal E}
+\newcommand{\defn}[1]{\textbf{#1}}
+\newcommand\Weyl{\mathcal{W}}
 
 % Some common lie algebras
+\newcommand{\Lie}[1]{\mathfrak{\lowercase{#1}}}
 \newcommand{\LieGL}{\mathfrak{gl}}
 \newcommand{\LieA}{\mathfrak{a}}
 \newcommand{\LieB}{\mathfrak{b}}
 \newcommand{\LieG}{\mathfrak{g}}
 \newcommand{\LieH}{\mathfrak{h}}
-%\newcommand{\sl}{\mathfrak{sl}}
+\newcommand{\LieSL}{\mathfrak{sl}}
 
 % Some common lie algebra ideals
 \DeclareMathOperator\Rad{Rad}
 
+
+\DeclareMathOperator\height{ht}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -507,6 +515,64 @@ The trick is to take the space of \emph{all} such functions $v: G\to V$ that sat
     be a polynomial. This will always be smooth as a manifold. So, in algebraic geometry, the term `smoothness' is reserved for something stronger.
 \end{insight}
 
+\section{Tangent Spaces}
+\label{sec:tangent_spaces}
+
+\emph{Reference for this section is \cite{brocker1982introduction}.}
+
+Let $M$ and $N$ be differentiable manifolds. Let $f: M\to N$. On the set of all differentiable functions defined at a neighbourhood around a point $p\in M$
+\begin{align}
+    \{f\ |\ f: U\to N, \quad U\subset M \text{ is a neighbourhood of $p\in M$}\}
+\end{align}
+we define the equivalence relation
+\begin{align}
+    f \sim g \iff \exists V\subset M \text{ such that } f|_V = g|_V.
+\end{align}
+The equivalence classes are called \emph{germs} at the point $p\in M$. We denoted the germs as $\bar f: (M,n)\to (N,q)$. A \emph{function germ} is an equivalence class for maps $(M,p)\to \RR$. The set of all function germ at $p\in M$ is denoted by $\mathcal E(p)$. If we defined addition and multiplication on $\germs(p)$ by the usual operations on their representatives, then $\germs (p)$ acquires the structure of a real algebra.
+\begin{insight}
+    We need to check if the multiplication and addition are well defined. Lets do it for multiplication.That is, given $\bar f_1 = \bar f_2$ and $\bar g_1 = \bar g_2$, do we have $\bar f_1 \bar g_1 = \bar f_2 \bar g_2$, or $\overline{f_1 g_1}=\overline{f_2 g_2}$? We need to find some $U\in M$ such that $f_1g_1=f_2g_2$ on $U$. Since, $f_1$ and $f_2$ agree on some $V_f\in M$ and $g_1$ and $g_2$ agree on some $V_g\in M$, the products $f_1 g_1$ and $f_2 g_2$ agree on $U=V_f\cap V_g$. Therefore, $\overline{f_1 g_1} = \overline{f_2 g_2}$ and the multiplication is well defined. 
+\end{insight}
+%The set of all germs at a point form the 
+
+Any differentiable germ $\bar f: (M,p)\to (N,q)$ induces a map real algebra homomorphism $f^*: \germs(q)\to\germs(p)$ via composition $\bar\phi \mapsto f^*(\bar\phi)=\bar\phi\cdot \bar f$. The ($^*$) is thus a \emph{contravariant functor}.
+
+\begin{center}
+\begin{tikzpicture}[ node distance=1.5cm,
+    functor/.style= {
+        ->, 
+        line join=round,
+        decorate, 
+        decoration={
+            zigzag,
+            segment length=4,
+            amplitude=.5,
+            post=lineto,
+            post length=5pt
+    } } ]
+    \node (bar f) {$\bar f: (M,p)\to (N,q)$};
+    \node (f*) [below of=bar f] {$f^*: \germs(p)\gets \germs(q)$} ;
+    \draw [functor] (bar f) -- (f*)node[midway, right] {$*$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Algebraist's definition}
+\label{sub:algebraist_s_definition}
+
+\begin{center}
+\begin{tikzcd}[column sep=8pt]
+    \bar f: (M,p) \arrow[rr, ""{name=U1, below}, "f" above] {} & & (N,q) \\
+    f^*: \germs(p) \arrow[rr, phantom, ""{name=U2, below}] {} & \arrow[rightsquigarrow, from=U1, "*", end anchor={[yshift=3pt]}]& \arrow[ll] \germs(q) \\
+    T_p f: T_p M \arrow[rr, ""{name=U3, below}] {} & \arrow[rightsquigarrow, from=U2, "T",end anchor={[yshift=3pt]}] & T_q N 
+\end{tikzcd}
+
+\end{center}
+
+\subsection{Physicist's definition}
+\label{sub:physicist_s_definition}
+\subsection{Geometer's definition}
+\label{sub:geometer_s_definition}
+
+
 
 \chapter{Lie Groups}
 \label{cha:lie_groups}
@@ -740,15 +806,8 @@ and extend this as an algebra homomorphism.
 \label{cha:lie_algebras}
 In this chapter, we undertake a systematic study of Lie algebras and attempt to classify them.
 
-\section{Overview}
-%\label{sec:overview}
-
-
-
-
-\begin{theorem}[Ado's theorem]
-Every finite dimensional lie algebra is a subalgebra of $\LieGL(V)$.
-\end{theorem}
+\section{Definitions}
+%\label{sec:definitions}
 
 Let's make a few definitions.
 \begin{align}
@@ -767,14 +826,30 @@ Let's make a few definitions.
 \end{definition}
 
 \begin{definition}[Radical]
-    Sum of all solvable ideals in $\LieG$ is again a solvable ideal, called the \textbf{radical} of $\LieG$ and denoted by $\Rad(\LieG)$
+    Sum of all solvable ideals in $\LieG$ is again a solvable ideal, called the \textbf{radical} of $\LieG$ and denoted by $\Rad(\LieG)$. This is the maximal solvable ideal.
 \end{definition}
+
+\begin{lemma}[Equivalent definitions of a semisimple Lie algebra]
+    \label{lemma:semisimple_definitions}
+    A Lie algebra is semisimple iff 
+    \begin{enumerate}[(i)]
+        \makethislistcompact
+        \item it has no non zero solvable ideals;
+        \item $\Rad \LieG=0$;
+        \item it has no non-zero abelian ideals.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    The first two are obvious. We will prove that they are equivalent to the third.
+    Let $\LieG$ be a semisimple Lie algebra. It does not contain any non zero abelian ideal since abelian ideals are solvable. On the other hand, if it is not semisimple, then let $\Lie r = \Rad \Lie g \neq 0$. Since $\Lie r$ is solvable, $D^k\Lie r = [D^{k-1}\Lie r, D^{k-1}\Lie r]=0$ for some minimum $k$. $D^{k-1}\Lie r$ is thus an abelian ideal.
+
+\end{proof}
 
 \begin{definition}[Reductive]
     A lie algebra $\LieG$ is \textbf{reductive} if it is the direct sum of a semisimple lie algebra and an abelian lie algebra.
 \end{definition}
 \begin{insight}
-   It does not make much sense to classify lie algebras and keep $\Lie{gl}_n$ out of it. That's why we define reductive lie algebras. Even though $\Lie{gl}_n$ is not semi-simple, it is reductive as $\Lie{gl}_n = \Lie{sl}_n\oplus \Lie{t}$ is the direct sum of the traceless lie algebra with with the scalar lie algebra.
+   It does not make much sense to classify Lie algebras and keep $\Lie{gl}_n$ out of it. That's why we define reductive Lie algebras. Even though $\Lie{gl}_n$ is not semi-simple, it is reductive as $\Lie{gl}_n = \Lie{sl}_n\oplus \Lie{t}$ is the direct sum of the traceless Lie algebra with with the scalar Lie algebra.
 \end{insight}
 
 \begin{lemma}
@@ -793,6 +868,18 @@ Notice that the lie algebra $\LieG/\Rad(\LieG)$ is semisimple. Any lie algebra f
     0\to \Rad(\LieG) \to \LieG \to \LieG/\Rad(\LieG) \to 0
 \end{align}
 where the first algebra is solvable and the last algebra is semisimple. Our approach to classify representations of Lie  algebras is then to study the representations of solvable and semisimple Lie algebras.
+
+
+
+\section{Overview}
+%\label{sec:overview}
+
+
+
+
+\begin{theorem}[Ado's theorem]
+Every finite dimensional lie algebra is a subalgebra of $\LieGL(V)$.
+\end{theorem}
 
 \begin{theorem}[Lie's theorem]
     
@@ -1015,8 +1102,8 @@ In such a case, $W'$ is said to be complement to $W$.
     The vector $ \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ spans an invariant subspace but has no complement.
 \end{insight}
 
-\section{Killing Form}
-\label{sec:killing_form}
+\subsection{Killing Form}
+\label{sub:killing_form}
 
 \begin{itemize}
     \makethislistcompact
@@ -1025,29 +1112,313 @@ In such a case, $W'$ is said to be complement to $W$.
     \item \cite{fulton_representation_1991} Section 14.2
 \end{itemize}
 
+\Todo{Lecture on 10.24.2014}
+
+\begin{proposition}
+    A Lie algebra is semisimple iff the Killing form is degenerate.
+\end{proposition}
+\begin{proof}
+    \Todo{Complete this}
+\end{proof}
+
+We have two notions of semisimplicity. One is the direct sum of simpler objects, and the other one is \Todo{...}. The following corollary talks about about the first notion.
+\begin{corollary}
+   A semisimple Lie algebra is a direct product of simple Lie algebras. (This implies that $\LieG=D\LieG$ if $\LieG$ is a semisimple Lie algebra.)
+\end{corollary}
+\begin{proof}
+    For any ideal $\LieH \subset \LieG$, 
+    \begin{align}
+        \LieH^\dagger = \{x\in \LieG\ |\  B(x,\LieH)=0 \}
+    \end{align}
+    is an ideal, since $ B([x,y],\LieH) = B(x,[y,\LieH]) \subset B(x,\LieH) = 0$. By Cartan's criterion, $\LieH^\dagger\cap \LieH$ is solvable, but $\LieG$ is semisimple, so $\LieH^\dagger\cap\LieH=0$. \Todo{Complete this.}
+\end{proof}
+
+
+\subsection{Complete Reducibility}
+\label{sub:complete_reducibility}
+A $\LieG$-module $V$ is called \emph{completely reducible} if $V$ is a direct sum of irreducible $\LieG$-submodules, or equivalently, if each $\LieG$-submodule $W\subset V$ has a complement $W'\in W$.
 
 
 
 
+\begin{theorem}[Weyl's Theorem]
+    \label{thm:weyl}
+    Finite dimensional reprsentations of a semisimple Lie algebra are completely reducible. 
+
+    Equivalently, let $V$ be a representation of a semisimple Lie algebra $\LieG$. Let $W\subset V$ be a submodule. There exists a complement $W'$, that is, a subrepresentation $W'\subset V$ such that $W+W'=V$ and $W\cap W'=0$.
+\end{theorem}
+\begin{proof}
+   Introduce the Casimir operator. \Todo{Complete this.}
+\end{proof}
+
+\begin{insight}
+   %Another approach to complete reducibility 
+   Representations of $\SL_n(\CC)$ are the same as representations of $\SU_n(\RR)$. Notice that even though $\SU_n(\RR) \injects \SL_n(\CC)$, it is \emph{not} a complex Lie group. It is a real Lie group.
+   \Todo{More to come...}
+\end{insight}
+
+\subsection{Jordon-Chevalley Decomposition}
+\label{sub:jordon_chevalley_decomposition}
+
+\emph{Reference: \cite{humphreys1972introduction} Section 4.2}
+
+Here $\FF$ is a field of arbitrary characteristic.
+
+An element $x\in \End(V)$ (for $V$ finite dimensional) is called \emph{semisimple} if the roots of its minimal polynomial over $\FF$ are all distinct. For $\FF$ an algebraically closed field, \Todo{this is equivalent to the statement that $x$ is semisimple iff $x$ is diagonalizable.}
+
+\begin{insight}
+   A Lie alegebra consisting of only semisimple elements may not be a semisimple Lie algebra.
+\end{insight}
+
+\begin{proposition}[Jordon-Chevalley Decomposition]
+    Let $V$ be a finite dimensional vector space over $F$ and let $x\in \End V$. 
+\begin{enumerate}[(a)]
+    \item There exists a unique $x_s,\, x_n\in \End V$ satisfying the conditions: $x= x_s + x_n$, $x_s$ is semisimple, $x_n$ is nilpotent and $[x_n,x_s]=0$.
+    \item There exists polynomials $p(T),\, q(T)$ in one indeterminate, without constant term, such that $x_s = p(x)$,\, $x_n = q(x)$. In particular, $x_n$ and $x_s$ commute with any endomorphism commuting with $x$.
+    \item If $A\subset B \subset V$ are subspaces, and $x$ maps $B$ into $A$, then $x_s$ and $x_n$ also map $B$ into A.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Preservation of Jordon Decomposition}
+\label{sub:preservation_of_jordon_decomposition}
+\emph{Reference \cite{humphreys1972introduction} 6.4}
+
+\begin{theorem}
+   Let $\LieG\in \LieGL(V)$  be a semisimple Lie algebra. Then $\LieG$ contains the semisimple and nilpotent parts in $\LieGL(V)$ of all of its elements. In  particular the abstract and usual Jordon decompositions coincide.
+\end{theorem}
+
+\begin{corollary}
+    \label{cor:jordon}
+    Let $\LieG$ be a semisimple Lie algebra. $\rho: \LieG\to \LieGL(V)$ a finite dimensional representation of $\LieG$. If $x=s + n$ is the abstract Jordon decomposition of $x\in L$, then $\rho(x)=\rho(s) + \rho(n)$ is the usual Jordon decomposition of $\rho(x)$.
+\end{corollary}
 
 
+\chapter{Cartan-Weyl Hightest Weight Theory}
+\label{cha:cartan_weyl_hightest_weight_theory}
 
 
+\section{Overview}
+In this chapter we'll develop the full machinery that will allow us the completely classfify the semisimple finite Lie algebras over any algebraically closed field of characteristic zero.
+
+\begin{enumerate}[(i)]
+    \makethislistcompact
+    \item Irreps of $\SL_2$
+    \item General semisimple case
+    \item Root space decomposition
+    \item Cartan subalgebra
+\end{enumerate}
 
 
+\section{Irreps of \texorpdfstring{$\mathfrak{sl}_2$}{sl\_2}}
+\label{sec:irreps_of_sl_2}
 
+Let $\LieG=\LieSL(2,\FF)$ and $V$ be an arbitrary $\LieG$-module.
+%Let $V$ be a $\SL_2$ module.
 
+Choose
+\begin{align}
+    X = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}, \quad
+    Y = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}, \quad
+    H = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}.
+\end{align}
+Computing the commutators, we get
+\begin{align}
+    [H,X] = 2X,\quad [H,Y]=-2Y,\quad [X,Y]=H.
+\end{align}
+\Todo{$H$ acts diagonally on $V$, by corollary~\ref{cor:jordon}. Since $H$ is diagonalizable iff the eigenspaces span the vector space...}
 
+We have the eigenspaces
+\begin{align}
+    V_\lambda = \{v\in V\ |\ H v = \lambda(v) v\}
+\end{align}
+where $\lambda(v)\in \FF$. This yeilds the decomposition
+\begin{align}
+    V &= \bigoplus_{\lambda\in \LieH^*} 
+\end{align}
+This yields a decomposition of $V$ as direct sum of eigenspaces 
 
+When $V_\lambda \neq \{0\}$, we call $\lambda$ a weight of $H$ in $V$ and we call $V_\lambda$ a weight space.
 
+\begin{lemma}
+    If $v\in V_\lambda$ then $Xv \in V_{\lambda + 2}$ and $Yv\in V_{\lambda-2}$.
+\end{lemma}
+\begin{proof} Trivial.
+\end{proof}
+Finite dimensionality of $V$ implies the existence of a maximal $\lambda$. For such $\lambda$, any nonzero vector in $V_\lambda$ is called a \emph{maximal vector of weight $\lambda$}.
 
+\subsection{Classification of irreducible modules}
+\label{sub:classification_of_irreducible_modules}
 
+Assume now that $V$ is an irreducible $\LieSL_2$ module. Choose a maximal vector $v_0\in V_\lambda$ and set
+\begin{align}
+    v_{-1}&=0, \\
+    v_k &= \frac{1}{k!} Y^k v_0, \quad\text{for } k\geq 0.
+\end{align}
 
+\Todo{more stuff here...}
 
+\section{Root Space Decomposition}
+\label{sec:root_space_decomposition}
 
+Let $\LieG$ be a semisimple Lie algebra.
 
+\begin{definition}
+    A Lie subalgebra $\Lie t \subset \Lie g$ is \emph{toral} if it contains only semisimple elements.
+\end{definition}
 
+\begin{insight}
+    Where is the torus in the toral Lie algebra? 
+\end{insight}
 
+\begin{lemma} 
+    Toral subalgebras exist.
+\end{lemma}
+\begin{proof}
+    Every element $x\in \LieG$ can be decomposed as into nilpotent and semisimple parts $x=x_s + x_n$, which are also in $\LieG$. 
+    If there was no semisimple element in $\LieG$, that is, if all the elements were nilpotent then $\LieG$ would be a nilpotent Lie algebra (by Engel's theorem). A semisimple Lie algebra can not be nilpotent (since nilpotent implies solvable). So, there exists some subalgebra (span of the semisimple elements) which is toral.
+\end{proof}
+
+\begin{lemma}
+    A toral subalgebra is abelian.
+    \label{lemma:toralsubalgebra_abelian}
+\end{lemma}
+\begin{proof}
+    Let $\Lie t \subset \Lie g$ be a toral subalgebra. We need to show that $\ad_{\Lie t} x=0 $ for all $x\in \Lie t$. Since $x\in \Lie t$ is semisimple, $\ad_\Lie t x$ is semisimple and thus diagonalizable ($\FF$ is an algebraically closed field). If $\ad_\Lie t x \neq 0$, then it has linearly independent eigenvectors that span $\Lie t$. We need to show that all the eigenvalues are zero. Assume, on the contrary, that there is some non-zero $v\in \Lie t$ such that $\ad_\Lie t x (v)=av$ with $a\neq 0$. Now, notice that 
+    \begin{align}
+        \ad_\Lie t v(\ad_\Lie t v(x))=-a[y,y]=0
+    \end{align} 
+    and so $\ad_\Lie t v(x)$ is an eigenvector of $\ad_\Lie t v$ with eigenvector $0$. Since $v$ is semisimple,so is $\ad_\Lie t v$ and thus has eigenvectors that span the space. We can write $x$ as a linear combination of eigenvectors of $v$. Let $x=\sum_i a_i v_i$ where $\ad_\Lie t v (v_i)=\lambda_i v_i$ for $i=1,\dotsc,n$. Now
+    \begin{align}
+        \ad_\Lie t (\ad_t v(x))&= \ad_\Lie t (\sum_i a_i \lambda_i v_i) \\
+            &= \sum_i a_i \lambda_i^2 v_i. 
+    \end{align}
+    But this must be zero, which contradicts the linear independence of the eigenvectors.  
+\end{proof}
+
+\begin{insight}
+    What is the difference between Cartan subalgebras and maximal toral subalgebras?  \Todo{``Cartan subalgebra = maximal toral subalgebra'' is the correct definition only when $\Lie g$ is reductive.}
+\end{insight}
+
+\begin{definition}[Cartan subalgebra]
+    The maximal toral subalgebra  is called the Cartan subalgebra.
+\end{definition}
+
+\begin{insight}
+   For $\Lie {sl}(n,\FF)$, the maximal toral subalgebra is the set of all diagonal matrices.
+\end{insight}
+Let $\LieH$ be the Cartan subalgebra of $\LieG$. Since $\LieH$ is abelian (by lemma~\ref{lemma:toralsubalgebra_abelian}), 
+\begin{align}
+    [\ad_\Lie g H_1, \ad_\Lie g H_2] &= \ad_\Lie g [H_1, H_2] =0  \quad \forall H_1,\, H_2 \in \LieH.
+\end{align}
+So $\ad_\Lie g \Lie h$ is a commuting family of endomorphisms of $\LieG$. Therefore, $\ad_\LieG\LieH$ can be simultaneously diagonalized. In other words,
+\begin{align}
+    \LieG &= \bigoplus_{\alpha\in \LieH^*} \LieG_\alpha \\
+    \text{with}\quad \LieG_\alpha &= \{x\in \LieG\ |\ \ad_\LieG h (x)=\alpha(h)x \quad\forall h\in \LieH\}.
+\end{align}
+
+Notice that $\LieG_0 = \{x\in\LieG\ |\ [\LieH,x] = 0 \forall x\in\LieG\} = C_\LieG(\LieH)$, the \defn{centralizer} of $\LieH$. 
+\begin{insight}
+    The centralizer of a subset is the set of all elements in the group which commute with all the elements in the subset.
+\end{insight}
+
+The set of all nonzero $\alpha\in\LieH^*$ for which $\LieG_\alpha \neq 0$ are called \defn{roots} of $\LieG$ relative to $\LieH$. We thus have the \defn{root space decomposition} or \defn{Cartan decomposition}: 
+\begin{align}
+    (*): \LieG &= C_\LieG(\LieH) \oplus \coprod_{\alpha\in\Phi} \LieG_\alpha
+\end{align}
+
+\chapter{Root Systems}
+\label{cha:root_systems}
+
+A \defn{Euclidean space} is is a vector space $E\isomorphic \RR^n$ equipped with a positive definite symmetric bilinear form $(\cdot,\cdot): E\times E \to \RR$. A reflection about any nonzero vector $\alpha$ is defined as
+\begin{align}
+    \sigma_\alpha(\beta) &= \beta - 2 \frac{(\beta,\alpha)}{(\alpha,\alpha)} \alpha
+\end{align}
+with the reflecting hyperplane given by
+\begin{align}
+    P_\alpha &= \{\beta\in E \ |\ (\beta,\alpha)=0\}.
+\end{align}
+We use the shorthand $\<\beta,\alpha\>=2 \frac{(\beta,\alpha)}{(\alpha,\alpha)}$.
+
+A subset $\Phi$ of the euclidean space $E$ is called a \defn{reduced root system} in $E$ if the following axioms are satisfied:
+\begin{enumerate}[(R1)]
+    \makethislistcompact
+    \item $\Phi$ is finite, spans $E$ and $\Phi\not\ni 0$.
+    \item If $\alpha\in \Phi$, the only multiples of $\alpha$ in $\Phi$ are $\pm \alpha$.
+    \item If $\alpha\in\Phi$, the reflection $\sigma_\alpha$ leaves $\Phi$ invariant.
+    \item If $\alpha,\beta\in \Phi$, then $\<\beta,\alpha\>\in \ZZ$
+\end{enumerate}
+
+\begin{insight}
+    If axiom (R2) is removed, then we get a \defn{root system} (no longer \emph{reduced}). This is useful in the classification of real semisimple Lie algebras.
+\end{insight}
+
+Let $\Phi$ be a root system in $E$. Let $\Weyl$ denote the subgroup of $\GL(E)$ generated by the reflections $\sigma_\alpha$. 
+
+By (R3), $\Weyl$ permutes the set $\Phi$, which by (R1).
+$\Weyl$ is the Weyl group.
+
+\begin{lemma}
+    Let $\Phi$  be a root system in $E$, with Weyl group $\Weyl$. If $\sigma\in \GL(E)$ leaves $\Phi$ invariant, then $\sigma \sigma_\alpha \sigma^{-1} = \sigma_{\sigma(\alpha)}$ for $\alpha\in \Phi$ and $\<\beta,\alpha\>=\<\sigma(\alpha),\sigma(\beta)\>$  for all $\alpha,\beta \in \Phi$.
+\end{lemma}
+\begin{proof}
+    
+\end{proof}
+
+\section{Bases}
+\label{sec:bases}
+
+A subset $\Delta \subset \Phi$ is called a \defn{base} if:
+\begin{itemize}
+    \makethislistcompact
+    \item [(B1)] $\Delta$ is a basis of $E$
+    \item [(B2)] each root $\beta$ can be written as a $\beta = \sum k_\alpha \alpha$ with $\alpha\in \Delta$ with integral coefficients all non-negative or nonpositive.
+\end{itemize}
+
+\begin{insight}
+   \begin{lemma}
+       A root is simple if and only if it cannot be written as a sum of other roots.
+   \end{lemma} 
+   \begin{proof}
+       \Todo{Prove this.} 
+   \end{proof}
+\end{insight}
+
+The roots in $\Delta$ are called \defn{simple} (\Todo{Is the definition of simple relative to the base?}).
+\Todo{Is Card $\Delta$= Dim $\Delta$}? 
+Since $\Delta$ is a basis, the expression given by (B2) is unique. This lets us define the \defn{height} of a root (relative to $\Delta$) by 
+\begin{align}
+    \height \beta = \sum_{\alpha\in \Delta} k_\alpha
+\end{align}
+A root is \defn{positive} if all $k_\alpha\geq0$ and \defn{negative} if all $k_\alpha<0$. The set of all positive roots is denoted by $\Phi^+$ and the set of all negative roots is given by $\Phi^-$.
+
+We need to show that a base defined as above actually exists. We do this by explicit construction. But first, we need 
+\begin{lemma}
+    If $\Delta$ is a base of $\Phi$, then $(\alpha,\beta)\leq 0$  for all $\alpha\neq\beta$ in $\Delta$, and $\alpha-\beta$ is not a root.
+\end{lemma}
+\begin{proof}
+    We have, by an earlier lemma (\Todo{reference}) that if $(\alpha,\beta)>0$ then $\alpha - \beta$ is a root. The logical negation of that statement is that if $\alpha + \beta$ is not a root, then $(\alpha,\beta)\leq 0$. But $\alpha-\beta$ can not be a root since that would violate that the second axiom (B2) that all coefficients must have the same sign.
+\end{proof}
+\begin{theorem}
+    Bases exist.
+\end{theorem}
+    For a vector $\gamma\in E$, define 
+    \begin{align}
+        \Phi^+(\gamma) = \{\alpha\in\Phi\ |\ (\gamma,\alpha)>0\}.
+    \end{align}
+    This is just the set of all vectors lying to the \emph{positive} side of the hyperplane orthogonal to $\gamma$, given by $P_\gamma$. 
+    \begin{insight}
+        Any finite union of hyperplanes in a euclidean space cannot exhaust all of the space. If you hyperplanes corresponding to vectors $S=\{\alpha_1,\dotsc,\alpha_n\}$, take a linearly independent subset of $S$ that spans $\<S\>$. The number of vectors in the subset must be less than or equal to $\dim E$. \Todo{Complete this}
+    \end{insight}
+
+    A $\gamma\in E$ is \defn{regular} if $\gamma\in E - \bigcup_{\alpha\in\Phi}P_\alpha$, \defn{singular} otherwise.
+
+    Given a vector $\gamma$ and a root $\alpha$, you could have $(\gamma,\alpha)$ less than, greater than, or equal to 0. If it vanishes, then it is singular by definition. Now, if it is regular then all the roots are on either side of the $P_\gamma$, so $\Phi = \Phi^+(\gamma)\cup \Phi^-(\gamma)$. Call $\alpha\in \Phi^+$ \defn{decomposable} if $\alpha = \beta_1 + \beta_2$ for some $\beta_i\in \Phi^+(\gamma)$, \defn{indecomposable} otherwise.
+
+\begin{theorem}
+    Let $\gamma\in E$ be regular. Then the set $\Delta(\gamma)$  of all indecomposable roots in $\Phi^+(\gamma)$ is a base of $\Phi$, and every base is obtainable in this manner.
+\end{theorem}
+\begin{proof}
+\end{proof}
 
 
 
