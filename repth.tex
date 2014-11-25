@@ -1,13 +1,12 @@
 \input{preamble.tex}
 
-% Bibliography using BibLaTeX
+% Bibliography using BibLaTeX/Biber
 \usepackage[
-    backend=bibtex,
-    %style=authoryear-icomp,
+    backend=biber,
     style=alphabetic,
     sortlocale=en_US,
-    natbib=true,
-    url=false, 
+    hyperref=true,
+    url=true, 
     doi=true,
     eprint=false
 ]{biblatex}
