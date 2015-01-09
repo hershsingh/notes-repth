@@ -1,0 +1,48 @@
+\chapter{Induced Representations}
+\label{cha:induced_reprentations}
+
+This chapter is based heavily on \cite{etingof_introduction_2009}.
+\section{Overview}
+\begin{enumerate}
+    \makethislistcompact
+    \item Define induced representations
+    \item Mackay formula for the character of an induced representation.
+    \item Frobenius Reciprocity
+\end{enumerate}
+
+\section{Definitions}
+
+\Todo{Don't really understand the motivation for this section.}
+
+Given a subgroup $H\subset G$, and $(\rho_V, V)$, a representation of $G$, we can easily construct a representation for $H$ by simply restricting $\rho_V$ to $H$, which we denote by $\rho_V|_H$.
+
+However, if want to construct a representation of $G$ from a representation of $H$, then we need to think a little more about it. 
+
+Think of the elements of $V$ as functions of $G$, that is, every element $v\in V$ defines a map $v: G\to V$ given by
+\begin{align}
+    v(g) &= \rho(g) v.
+\end{align}
+Now, we already know how $v(\cdot)$ acts on $H$. We want to extend that action to $G$. The least we could do is to ensure that the action on $G$ is consistent with the known action on $H$. So, we enforce that
+\begin{align}
+    v(hg) = h\cdot v(g) &= \rho_V(h) v(g)\quad \forall h\in H,\ g\in G.
+\end{align}
+The trick is to take the space of \emph{all} such functions $v: G\to V$ that satisfy the above condition. If that turns out to be a representation, we would get the most \emph{free} representation. So, lets define 
+\begin{align}
+    \Ind_G^H(V) &= \{f: G\to V : v(gh)=\rho_V(h)v(g)\ \forall h\in H, g\in G\}.
+\end{align}
+
+\Todo{
+   Check this is indeed a representation. 
+   }
+
+
+\pagebreak
+\begin{insight}
+    Why is $\Ind_H^G{V}$ naturally isomorphic to $\Hom_H(k[G],V)$?
+    An element of $\Hom_H(k[G],V)$ is just a $H$-module homomorphism $f: k[G]\to V$ such that
+    \begin{align}
+        f(hg)  = h\cdot f(g)
+        \implies f(hg) &= \rho(v) f(g)
+    \end{align}
+    All such $f$ are precisely all the elements in $\Ind_H^G(V)$.
+\end{insight}

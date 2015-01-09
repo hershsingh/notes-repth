@@ -1,0 +1,88 @@
+\chapter{Character Theory}
+\label{cha:character_theory}
+\begin{definition}
+    If $V$ is a representation of $G$, its \emph{character} $\chi_V$ is the complex-valued function on the group defined by
+    \begin{align}
+        \chi_V(g) &= \Tr(g|_V),
+    \end{align}
+    the trace of $g$ on $V$.
+\end{definition}
+
+We shall drop the subscript $V$ when it's obvious.
+
+Some properties
+\begin{enumerate}
+    \item $\chi_V$ is a class function, which means that it is constant on conjugacy classes  of $G$.
+        \begin{align}
+            \chi(hgh^{-1}) &= \chi(g)
+        \end{align}
+    \item 
+\end{enumerate}
+
+\section{First Projection Formula}
+\label{sec:first_projection_formula}
+Let us define $V^G$ as the elements of $V$ fixed under the action of $G$.
+\begin{align}
+    V^G=\{v\in V: gv=v\ \forall g\in G \}
+\end{align}
+The sub space $V^G$ is actually the direct sum of the trivial subrepresentations.
+
+Now, the endomorphism $\varphi \in \End(V)$, 
+\begin{align}
+    \varphi &= \frac{1}{|G|} \sum_{g\in G} g
+\end{align}
+is $G$ linear, since $h\varphi h^{-1} = \frac{1}{|G|}\sum_{g\in G} hgh^{-1} = \varphi$.  Infact, $\varphi$ is projection of $V$ to $V^G$.
+
+So, now we have a way of finding the direct sum of the trivial subrepresentations of $V$. The trace of this map is would be the dimension of $V_G$ [\Todo {Why?}], which is the number of copies of trivial representations in $V^G$.
+
+\begin{insight}
+    \Todo{ For an arbitrary linear map (projection?) $T: V\to W$, do we have $\Tr T =\dim W$ ?  }
+\end{insight}
+
+\begin{align}
+    \dim V^G &= \Tr (\varphi)\\
+        &= \frac{1}{|G|}\sum_{g\in G} \Tr(g)\\
+        &= \frac{1}{|G|}\sum_{g\in G}\chi_V(g)
+        \label{eqn:dimV_G}
+\end{align}
+In particular, if $V$ is irreducible, then it has no trivial subrepresentations and thus
+\begin{align}
+    \sum_{g\in G} \chi_V(g) &= 0\quad\quad\text{if $V$ is an nontrivial irrep}.
+\end{align}
+
+We know that $\Hom(V,W)^G$, the set of all homomorphisms $V\to W$ fixed under $G$, is just the space of all $G$-linear maps $V\to W$. [\Todo{reference here.}]
+\begin{insight}
+    Given a $G$-linear map $\phi: V\to W$, where $V$ is an irrep, $\phi$ defines an isomorphism between $V$ and $\Image(\phi)$ (since $\ker \phi$ is a subrepresentation of $V$, and so must be $\{0\}$) Now, other such $\phi$ would give us copies of $V$ in $W$. \Todo{The dimensionality of the space $\Hom_G(V,W)$ thus tells us the multiplicity of $V$ in $W$.}
+\end{insight}
+
+By Schur's lemma, if $V$ and $W$ are both irreducible then
+\begin{equation}
+    \dim \Hom_G(V,W) = 
+        \begin{cases}    
+            1   &\text{if } V\isomorphic W \\
+            0   &\text{if } V\ncong  W
+        \end{cases}
+\end{equation}
+Since we have $\Hom_G(V,W)\isomorphic V^*\otimes W$,
+\begin{align}
+    \chi_{\Hom_G(V,W)}(g) &= \overline{\chi_V(g)}\cdot\chi_W(g)
+\end{align}
+Using \eqref{eqn:dimV_G} here, we get the nice result
+\begin{align}
+        %\frac{1}{|G|}\sum_{g\in G}\chi_V(g) &= 
+        \frac{1}{|G|}\sum_{g\in G} \overline{\chi_V(g)}\cdot\chi_W(g) 
+        &= \begin{cases}    
+            1   &\text{if } V\isomorphic W \\
+            0   &\text{if } V\ncong  W
+        \end{cases}
+\end{align}
+This inspires us to define a dot product on the space of all class functions (functions that are defined on the conjugacy classes of a group) of $G$,
+\begin{align}
+    \CC_{\text{class}}(G) &= \{\text{class functions on $G$}\},
+\end{align}
+as
+\begin{align}
+    (\alpha,\beta) &= \frac{1}{|G|} \sum_{g\in G} \overline{\alpha(g)} \beta(g).
+    \label{eqn:dotproduct_classfunctions}
+\end{align}
+In respect this dot product, the characters of irreps are orthonormal.

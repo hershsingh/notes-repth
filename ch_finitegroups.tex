@@ -1,0 +1,262 @@
+\chapter{Representations of Finite Groups}
+\section{Definitions}
+\label{sec:definitions}
+
+Let $G$ be a finite group, $V$ be a finite dimensional complex vector space.
+
+A \emph{representation} of $G$ on $V$ is a group homomorphism 
+\begin{align}
+    \rho:  G\to \GL(V), 
+\end{align}
+where $\GL(V)$ is the group of automorphisms of $V$. Even though the ``representation" is really the vector space $V$ \emph{and} the homomorphism $\rho$, but it is common (especially by physicists) to refer to $V$ itself as the representation. 
+
+\begin{insight}
+We say that this map gives $V$ the structure of a G-module. This agrees with the  definition of a R-module (R is a ring) that I have studied earlier. An R-module is simply a vector space defined over a ring, instead of a field. So the ring elements act as the \emph{scalars}. Of course, the description must include a rule for the `interaction' of the scalars with the vectors. To be a module, the interaction must be \emph{linear}.  
+In this case, the group homomorphism $\rho$ gives us that rule of interaction between the vectors (elements of $V$) and the scalars (elements of $G$). For $g\in G, v \in V$, $$gv\equiv\rho(g)v \in V$$
+\end{insight}
+
+
+A vector space homomorphism $\phi: V\to W$ is a morphism between the two representations $V$ and $W$ if the following diagram commutes:
+\begin{equation} \begin{CD}
+  V @>\phi>> W\\
+  @VgVV @VVgV\\
+  V @>\phi>> W\\
+\end{CD} \end{equation}
+
+That is, $\phi g=g\phi$ for all $g\in G$. This makes the group elements \emph{behave like scalars under module homomorphisms}. Such morphisms of representations are also called $G$-\emph{linear map} or a \emph{$G$ intertwiner}.
+
+\begin{insight}
+   Why is this is a good definition? Seems to be inspired from module homomorphisms. This is natural in some sense - Figure that out.
+\end{insight}
+
+$\Ker \phi,\ \Image \phi,\ \Coker \phi = V/\Image\phi$ are also $G$-modules. This is solely because of the commutativity of the above diagram.
+\begin{itemize}
+    \item If $v\in \Ker \phi$, then $\phi(gv) = g\phi(v) = 0$. So $gv$ also $\in \Ker \phi$. $\blacksquare$.
+    \item If $v\in \Image \phi$, then let $\phi(v) = w$. So $\phi(gv)=g\phi(v)=gw \in W$. So $gv$ also $\in \Image \phi$. $\blacksquare$.
+\end{itemize}
+
+One of the goals of our study is, given a representation, to develop tools for constructing other, preferably all, representations of the group. 
+Some examples of representations that can be constructed from $V$ and $W$
+
+\begin{enumerate}[(a)]
+    \item Tensor product $V\otimes W$ via
+        \begin{align}
+            g(v\otimes w) = g(v) \otimes g(w)
+        \end{align}
+    \item Tensor power $V^{\otimes n}$ and the \emph{exterior power}  $\Lambda^n(V)$ and the \emph{symmetric power} $\Sym^n(V)$ are its subrepresentations.
+    \item the dual $V^* = \Hom(V,\CC)$. This is a little tricky though. The action of $G$ on $V^*$ must be such that it preserves the natural inner product, denoted by $\<\ ,\ \>$, between them. So, if we have a representation $(V^*,\rho^*)$ and $(V,\rho)$, then we should have
+        \begin{align}
+            \rho^*_g(u^*)(\rho_g v) = u^*(v)
+        \end{align}
+        where I have written $\rho_g=\rho(g)$ for a cleaner notation, and $u^*\in V^*,\ v\in V$. 
+        \begin{insight}
+            Remember the definition of the transpose map. If we have a map $f: V\to W$, then the transpose of $\rho$ is a map $^t\rho: W^*\to V^*$ such that
+            \begin{align}
+                ^tf(\phi) = f\cdot \phi \quad\quad\forall \phi\in W^*.
+            \end{align}
+            It's a good idea to make commutative diagrams out of statements like the above:
+            \begin{center}
+            \begin{tikzpicture}[commutative diagram, node distance=1.5cm]
+                \node (V) {$V$};
+                \node (CC) [below right of=V] {$\CC$};
+                \node (W) [below left of=V] {$W$};
+                \draw [arrow] (V) -- (CC) node [midway] {$^tf(\phi)=\phi\cdot f$};
+                \draw [arrow] (V) -- (W) node [midway,auto=right] {$f$};
+                \draw [arrow] (W) -- (CC) node [midway] {$\phi$};
+            \end{tikzpicture}
+            \end{center}
+        \end{insight}
+        If we now define
+        \begin{align}
+            \rho^*(g) &= \prescript{t}{}\rho(g^{-1})
+            \label{eqn:defn_dualrep}
+        \end{align}
+        we get
+        \begin{align*}
+            \rho_g^*(u*)(\rho_g v) &= \prescript{t}{}\rho_{g^{-1}}(u^*)(\rho_g v)\\
+                &= u^*\cdot\rho_{g^{-1}} (\rho_g v) \\
+                &= u^* (\rho_{g^{-1}g} v) \\
+                &= u^*(v).
+        \end{align*}
+        The definition \eqref{eqn:defn_dualrep} preserves the inner product, and is a thus a sane definition.
+    \item $\Hom(V,W)$ by the identification, $\Hom(V,W)=V^*\otimes W$ (see appendix \ref{cha:tensor_product}). If $(\phi: V\to W)\in \Hom(V,W)$ then let $\sum_i \phi_{ij} v_i^*\otimes w_j$. Writing out the action of this on $u\in V$,
+        \begin{align*}
+            (g\phi)(gu) &= \left[ g \sum\phi_{ij} v^*_i \otimes w_j \right] (gu) \\
+                &= \Big[ \sum_{ij}\phi_{ij} gv^*_i \otimes gw_j \Big] (gu) \\
+                &= \sum \phi_{ij} \<gv_i^*, gu\> g w_j\\
+                &= \sum \phi_{ij} \<v_i^*, u\> g w_j\\
+        \end{align*}
+        This gives us
+        \begin{align}
+            (g\phi)(gu) &= g\cdot\phi(u)\quad \forall u\in  V.
+            \label{eqn:linearmap_groupaction}
+        \end{align}
+        \begin{insight}
+            Note that you cannot multiply both sides by $g^{-1}$ to imply that $\phi(gu)=\phi(u)$. This can't be done since the action of $G$ on $V^*$ is \emph{not associative}. That means,
+            \begin{align*}
+                (g\phi)(u) \neq g\cdot \phi(u),
+            \end{align*}
+            as can be seen by simply taking, say, $\phi=v^*\otimes w$. LHS becomes $\< gv^*, u \>gw$ while RHS becomes $\<v^*,w\>gw$.
+        \end{insight}
+        \begin{center}
+            \begin{tikzpicture}[commutative diagram]
+                \node (V1) {$V$};
+                \node (W1) [right of=V] {$W$};
+                \node (V2) [below of=V1] {$V$};
+                \node (W2) [below of=W1] {$W$};
+                \draw [arrow] (V1) -- (W1) node [midway, auto=right] {$\phi$};
+                \draw [arrow] (V2) -- (W2) node [midway, auto=right] {$g\phi$};
+                \draw [arrow] (V1) -- (V2) node [midway, left] {$g$};
+                \draw [arrow] (W1) -- (W2) node [midway] {$g$};
+            \end{tikzpicture}
+        \end{center}
+        Of course, if $\phi$ is a $G$-linear map (a map between representations $V$ and $W$), then we also have $g\cdot\phi = \phi\cdot g$ for all $g\in G$. Consider the space $\Hom_G(V,W) \subset \Hom(V,W)$, which consists of maps from $V$ to $W$ invariant under the action $G$. If $\phi\in \Hom_G(V,W)$, then we have $(g\phi)(gu)=g\phi(u)$ and $(g\phi)(u)=\phi(u)$ (by invariance of the map under $G$). Thus we have $g\phi(u)=\phi(gu)$. The converse is also easily seen to be true. Therefore, $\Hom(V,W)$ is space of all $G$-linear maps $V\to W$.  \Solution{1.2}{FH} 
+
+        
+\end{enumerate}
+
+
+
+\begin{itemize}
+    \item \Todo{Todo: Regular Representation}
+    \item \Todo{Exercise 1.3,1.4}
+\end{itemize}
+
+\section{Schur's Lemma}
+\label{sec:schur_s_lemma}
+
+\begin{lemma}[Schur's Lemma]
+    Let $V,\ W$ be irreps of a group $G$ and $\phi: V\to W$ a $G$-linear map. Then,
+    \begin{enumerate}[(i)]
+        \item either $\phi$ is 0 or an isomorphism;
+        \item if $V=W$, then $\phi=\lambda I$.
+    \end{enumerate}
+\end{lemma}
+
+\section{Examples}
+\label{sec:examples}
+
+We observe that any $g\in G$ gives a map $\rho(g): V\to V$. In general, this is not a $G$-linear map however. For $\rho(g)$ to be a $G$ linear map, ...
+%\begin{align}
+    %g(h(v)) &= h(g(v))\quad\quad \forall h\in G
+%\end{align}
+%which just says that the set of all $G$-linear maps in $\rho(G)$ is precisely the center of $G$, given by $Z(G)$.
+
+\subsection{Abelian Groups}
+\label{sub:abelian_groups}
+
+If $G$ is an abelian group, and $V$ is an irrep, then $\rho(g)$ is a $G$-linear map.By Schur's Lemma, $\rho(g)=\lambda I$. That means that any proper subspace of $V$ is actually invariant under the action of $G$, and is a thus a subrepresentation. But since $V$ is irreducible, this can only mean that $V$ has no non-trivial proper subspace, which implies that $V$ is one-dimensional. Therefore, any representation of an abelian group is just an element of the \emph{dual group}
+\begin{align}
+    \rho: G \to \CC^*.
+\end{align}
+
+%Incidentally, this is also the definition of the \emph{dual group}.
+
+\subsection{\texorpdfstring{$S_3$}{S3}}
+%\label{sub:_s_3_}
+
+\begin{insight}
+    Remember that $S_3$ is the group of permutations of three objects. Algebraically, it can be thought to be generated by the elements
+    \begin{align}
+        \{1,\ \tau,\ \tau^2, \sigma,\ \sigma\tau,\ \sigma\tau^2\}
+    \end{align}
+    subject to the conditions
+    \begin{align}
+        \tau^3=1,\quad \sigma^2=1,\quad (\sigma\tau)^2=1.
+    \end{align}
+    You can tell that $\sigma$ is a 2-cycle and $\tau$ is a 3-cycle.
+    
+\end{insight}
+
+Lets now discuss the case of the \emph{simplest non-abelian group}, $S_3$. We already know three representations to begin with:
+\begin{enumerate}[(i)] 
+    \makethislistcompact
+    \item the trivial representation,
+        \begin{align}
+            \rho(g) &= I
+        \end{align}
+    \item the alternating representation
+        \begin{align}
+            \rho(g) &= \sgn(g),
+        \end{align}
+    \item the natural permutation representation.\\
+        But this is not irreducible. It can be easily seen that the subspace spanned by the vector $(1,1,1)$ is invariant under $G$. So, the space $V$ complimentary to it is another (hopefully irreducible!) representation. If $v=(z_1,z_2,z_3) \in V$, then 
+        \begin{align}
+            (z_1,z_2,z_2)\cdot(1,1,1) &= 0\\
+            \implies z_1 + z_2 + z_3 &= 0.
+        \end{align}
+        We thus have
+        \begin{align}
+            V &= \{(z_1,z_2,z_3) \in \CC^3: z_1 + z_2 + z_3 =0\}.
+        \end{align}
+        Now if this further has an invariant subspace, it must be spanned by an element of the form $(z_1,z_2,-z_1-z_2)$. Applying a few permutations will convince you immediately that this is not an invariant subspace. Therefore, the representation we have is irreducible, called the \emph{standard representation} of $S_3$.
+\end{enumerate}
+We now want to characterize any arbitrary representation $W$ of $S_3$. To do so, we first look at the action of the abelian subgroup $ U_3 = \ZZ/3 \in G$ (generated by $x$) on $W$. If $v\in W$ is an eigenvector of $\rho(x)$, then 
+\begin{align}
+    \tau \sigma (v) &= \sigma\tau^2 (v)\\
+        &= \omega^2 (\sigma v)
+\end{align}
+This means that if $v$ is eigenvector of $\tau$ with the eigenvalue $\omega$, then $\sigma v$ is also an eigenvector with the eigenvalue $\omega^2$.
+To find the decomposition of the $W$, we go through the following steps:
+\begin{enumerate}[(i)]
+    \item Start with an eigenvector $v$ of $\tau$, which has the eigenvalue $w^i$.
+    \item If $w^i\neq 1$, then $\sigma v$ is an eigenvector independent of $\tau$ with the eigenvalue $w^{2i}$. In this case, $\{v,\sigma v\}$ form a two dimensional subspace of $W$ invariant under $S_3$ (as $\sigma$ just exchanges $v$ and $\sigma v$). In fact, this subrepresentation is isomorphic to the standard representation and is thus irreducible.
+    \item If $w^i = 1$, then $\sigma v$ may or may not be independent of $v$.
+        \begin{enumerate}
+            \item If $\sigma v$ is independent of $v$, then $v + \sigma v$ spans a subspace isomorphic to the trivial representation and $v - \sigma v$ spans a subspace isomorphic to the alternating representation. 
+            \item If $\sigma v$ and $v$ are not linearly independent, then 
+                $\sigma v= \lambda v$ for some $\lambda\in \{1,-1\}$ (since $\sigma^2=I$). If $\lambda=1$, then $\CC v$ is isomorphic to the trivial representation and if $\lambda=-1$, then $\CC v$ is isomorphic to the alternating representation.
+        \end{enumerate}
+\end{enumerate}
+
+Note that this allows to find all irreps of a given representation $W$!
+
+\Solution{1.12(a)}{FH} Lets use this approach to find out the irreps of th regular representation $R$ of $S_3$. A general vector in the space looks like this
+\begin{align}
+    v &= a_1 + a_2 \tau + a_3 \tau^2 + b_1\sigma + b_2 \sigma\tau + b_3\sigma \tau^2 
+\end{align}
+
+The eigenvalues of $\tau$ are $\{1,\omega,\omega^2\}$. 
+\begin{enumerate}
+    \makethislistcompact
+    \item For eigenvalue $=1$, we have $v=1 + \tau + \tau^2$ and $\sigma v = \sigma + \sigma\tau + \sigma\tau^2$. Thus $\CC (v+\sigma v)\isomorphic \triv$ and $\CC (v-\sigma v) \isomorphic \sgn$ are two irreps.
+    \item For eigenvalue $=\omega$, we get on solving $\tau \alpha = \omega \alpha$
+        \begin{align}
+            \alpha &= \omega^2\tau + \omega\tau + \tau^2
+        \end{align}
+        With $\beta = \sigma \alpha$, we get the subspace spanned by $\{\alpha,\beta\}$ to be isomorphic to the standard representation.
+    \item For eigenvalue $=\omega^2$, we get 
+        \begin{align}
+            \alpha' &= \omega^2 + \omega\tau + \tau^2\\
+            \beta' = \sigma\alpha &= \omega^2\sigma + \omega\sigma\tau + \sigma\tau^2
+        \end{align}
+        The subspace spanned by $\{\alpha',\beta'\}$ is again isomorphic to the standard representation.
+\end{enumerate}
+We have enumerated six linearly independent eigenvectors and therefore exhausted all of them. We thus get
+\begin{align}
+   R &\isomorphic \triv \oplus \sgn \oplus (\std)^2 \quad\quad\square    
+\end{align}
+\Solution{1.14}{FH} For an irrep $V$ of a finite group $G$, there is a unique Hermitian inner product preserved by $G$. Say there are two Hermitian products, $H$ and $H'$, preserved by $G$. Any Hermitian inner product sets up an isomorphism between $V$ and $V^*$. Let that map be given by
+\begin{align}
+    \phi_1(v) &= H_1(v,\cdot) \in V^*\\
+    \phi_2(v) &= H_2(v,\cdot) \in V^*
+\end{align}
+\begin{insight}
+    Write details about the isomorphism between $V$ and $V^*$. Crucial is the positive-definiteness of the inner product. Not sure where the Hermiticity of the inner product is important.
+\end{insight}
+\begin{align}
+    V^* \xleftarrow{\phi_1} V \xrightarrow{\phi_2} V^*
+\end{align}
+Now, the map $\phi = \phi_2\cdot\phi_1^{-1}$ is an isomorphism of vector spaces. It is also a $G$-linear map since its the composition of $G$-linear maps. Therefore, $\phi$ is an isomorphism between two irreps. By Schur's lemma, $\phi=\lambda\cdot I$, where $\lambda$ is any scalar. This gives us
+\begin{align}
+    H_2(v,\cdot) &= \phi(H_1(v,\cdot)) \\
+        &= \lambda H_1(v,\cdot)\quad\quad\qed
+\end{align}
+
+\noindent\Todo{\Solution{1.13(a)}{FH}}\\
+\Solution{1.13(b)}{FH} Is $\Sym^n(\Sym^mV)\isomorphic \Sym^m(\Sym^n V)$? No, since the dimensions don't match on both sides.
+\begin{align}
+    \dim \Sym^n(\Sym^mV) &= ^{{}^{\dim V - 1 + m}C_{m} -1 +n}C_{n}
+\end{align}
+The above equation is clearly not symmetric in $m$ and $n$. So the isomorphism can not hold in general.
+

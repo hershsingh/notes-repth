@@ -1,0 +1,21 @@
+\chapter{Conjugacy Theorems}
+\label{cha:conjugacy_theorems}
+
+References: \cite[$\S 16$]{humphreys1972introduction}
+
+\begin{theorem}[Conjugacy of CSAs (solvable case)]
+    Let $L$ be solvable. Any two CSAs are conjugate.
+\end{theorem}
+
+\defn{Borel subalgebras} are maximal solvable subalgebras of a Lie algebra $\LieG$.
+\begin{lemma}
+    If $B$  is a Borel subalgebra of $\LieG$, then $B=N_L(B)$.
+\end{lemma}
+\begin{proof}
+    Let $x$ normalize $B$. Then $B + Fx$ is a subalgebra of $L$, solvable because $[B + \FF x, B + \FF x] = [B,B] + \FF [B,x] + \FF [x,B] = [B,B] \subset B$. So, $x\in B$ by maximality of $B$.
+\end{proof}
+\begin{insight}
+    Recall that a normalizer of a group is the set of all elements that commutes with the whole group.
+\end{insight}
+
+

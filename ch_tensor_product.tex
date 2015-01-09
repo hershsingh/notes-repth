@@ -1,0 +1,87 @@
+\chapter{Tensor Product}
+\label{cha:tensor_product}
+
+Let $V,\ W$ be vector spaces. A tensor product is a vector space $V\otimes W$ equipped with a bilinear map
+\begin{align}
+    V\times W \to V\otimes W\\
+    (v,w) \mapsto v\otimes w
+\end{align}
+such that it is \emph{universal}. That is, given any other vector space $U$ and a bilinear map $\beta: V\times W\to U$, there is unique map $\beta': V\otimes W \to U$ such that $\beta'(v\otimes w) = \beta(v,w)$. The following diagram commutes:
+
+\begin{center}
+\begin{tikzpicture}[commutative diagram] 
+    \node (a) {$V\times W$};
+    \node (b) [below right of=a] {$V\otimes W$};
+    \node (c) [below left of=a] {$U$};
+    \draw [arrow] (a) -- (b) node [midway] {$\otimes$};
+    \draw [arrow] (a) -- (c) node [midway,auto=right] {$\beta$};
+    \draw [exists] (b) -- (c) node [midway] {$\exists!\ \beta'$};
+\end{tikzpicture}
+\end{center}
+The universality requirement means that the tensor product thus defined is unique up to an isomorphism. Let there be another tensor product $V\otimes' W$ (a vector space and a corresponding map that takes $(v,w)\mapsto v\otimes' w$) that is also universal. Then it immediately implies that there is a bijection between $V\otimes W$ and $V\otimes' W$ since
+\begin{center}
+\begin{tikzpicture}[commutative diagram] 
+    \node (a) {$V\times W$};
+    \node (b) [below right of=a] {$V\otimes W$};
+    \node (c) [below left of=a] {$V\otimes' W$};
+    \draw [arrow] (a) -- (b) node [midway] {$\otimes$};
+    \draw [arrow] (a) -- (c) node [midway,auto=right] {$\otimes'$};
+    \draw [exists] (c.5) -- (b.175) node [midway, above] {$\exists!$};
+    \draw [exists] (b.185) -- (c.355) node [midway] {$\exists!$};
+\end{tikzpicture}
+\end{center}
+
+\begin{theorem}[]
+    $\Hom(V,W) \isomorphic V^*\otimes W$ as vector spaces.
+\end{theorem}
+\begin{proof}
+   Quick Check: Set $W=\CC$ so that we get $\Hom(V,\CC)\isomorphic V^*\otimes 1 = V^*$, which is the definition of the dual space $V^*$.
+
+   Given $(\beta: V\to W) \in \Hom(V,W)$, define the map $\phi: \Hom(V,W)\to V^* \otimes W $ such that 
+   \begin{align}
+       \phi(\beta) = \sum_{i,j} \beta_{ij} v_i^* \otimes w_j
+   \end{align}
+   where $\{v_i\}$ and $\{w_j\}$ are orthonormal basis for $V$ and $W$ respectively and $\beta_{ij} = \beta(v_i)^T w_j$.
+   This is a homomorphism of vector spaces. The inverse map is obvious.
+\end{proof}
+
+\section{Exterior Products and Symmetric Products}
+\label{sec:exterior_products_and_symmetric_products}
+
+\subsection{Definitions}
+\label{sub:definitions}
+
+\subsection{Some Combinatorics}
+\label{sub:some_combinatorics}
+
+Lets find out the dimensions of the vector space $\Lambda^k V$, where $V$ is an $n$-dimensional vector space.
+If $\{e_i\}$ is a basis for $V$, we know that a basis for $\Lambda^k V$ is 
+\begin{align}
+    \{e_{i_1}\wedge e_{i_2} \wedge\cdots \wedge e_{i_k} : i_1 < i_2 < \cdots < i_k \}.
+\end{align}
+How many vectors are there in this basis? This can be answered by looking at how many ways are there to simply choose $k$ objects from a set of $n$ different objects. Since there is just one of arranging them (in increasing order), that would be the number of vectors in the basis. So,
+\begin{align}
+    \dim \Lambda^k (V) &= {}^{\dim V}C_k
+    \label{eqn:dim_exteriorpower}
+\end{align}
+
+What's the dimension of $\Sym^k(V)$? The basis is
+\begin{align}
+    \{e_{i_1}\cdot e_{i_2} \cdot\cdots \cdot e_{i_k} : i_1 \leq i_2 \leq \cdots \leq i_k \}.
+\end{align}
+Another way to write that is
+\begin{align}
+    \{e_1^{a_1}\cdot e_2^{a_2} \cdots e_k^{a_k}\},\quad\text{such that } \sum_i a_i = n,\, a_i\geq 0.
+\end{align}
+We just need to know how many ways are there to distribute $n$ identical things among $k$ different people with no restriction on the number of things anyone can get. To solve this, introduce $k-1$ identical barriers (denoted by $|$) between $n$ things (denoted by $\circ$)and look at the number of permutations.
+\begin{align}
+    \circ | \circ | \cdots | \circ
+\end{align}
+Every permutation here gives possible choice of ${a_1,\dotsc,a_k}$. Therefore,
+\begin{align}
+    \dim (\Sym^k (V)) &= {}^{\dim V +k-1}C_{k}
+    \label{eqn:dim_symmetricpower}
+\end{align}
+
+
+

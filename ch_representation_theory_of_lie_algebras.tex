@@ -1,0 +1,134 @@
+\chapter{Representation theory of Lie Algebras}
+\label{cha:representation_theory_of_lie_algebras}
+
+
+
+\section{Overview}
+In this chapter we'll develop the full machinery that will allow us the completely classfify the semisimple finite Lie algebras over any algebraically closed field of characteristic zero.
+
+\begin{enumerate}[(i)]
+    \makethislistcompact
+    \item Irreps of $\SL_2$
+    \item General semisimple case
+    \item Root space decomposition
+    \item Cartan subalgebra
+\end{enumerate}
+
+
+\section{Irreps of \texorpdfstring{$\mathfrak{sl}_2$}{sl\_2}}
+\label{sec:irreps_of_sl_2}
+
+Let $\LieG=\LieSL(2,\FF)$ and $V$ be an arbitrary $\LieG$-module.
+%Let $V$ be a $\SL_2$ module.
+
+Choose
+\begin{align}
+    X = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}, \quad
+    Y = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}, \quad
+    H = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}.
+\end{align}
+Computing the commutators, we get
+\begin{align}
+    [H,X] = 2X,\quad [H,Y]=-2Y,\quad [X,Y]=H.
+\end{align}
+\Todo{$H$ acts diagonally on $V$, by corollary~\ref{cor:jordon}. Since $H$ is diagonalizable iff the eigenspaces span the vector space...}
+
+We have the eigenspaces
+\begin{align}
+    V_\lambda = \{v\in V\ |\ H v = \lambda(v) v\}
+\end{align}
+where $\lambda(v)\in \FF$. This yields the decomposition
+\begin{align}
+    V &= \bigoplus_{\lambda\in \LieH^*} 
+\end{align}
+This yields a decomposition of $V$ as direct sum of eigenspaces 
+
+When $V_\lambda \neq \{0\}$, we call $\lambda$ a weight of $H$ in $V$ and we call $V_\lambda$ a weight space.
+
+\begin{lemma}
+    If $v\in V_\lambda$ then $Xv \in V_{\lambda + 2}$ and $Yv\in V_{\lambda-2}$.
+\end{lemma}
+\begin{proof} Trivial.
+\end{proof}
+Finite dimensionality of $V$ implies the existence of a maximal $\lambda$. For such $\lambda$, any nonzero vector in $V_\lambda$ is called a \emph{maximal vector of weight $\lambda$}.
+
+\subsection{Classification of irreducible modules}
+\label{sub:classification_of_irreducible_modules}
+
+Assume now that $V$ is an irreducible $\LieSL_2$ module. Choose a maximal vector $v_0\in V_\lambda$ and set
+\begin{align}
+    v_{-1}&=0, \\
+    v_k &= \frac{1}{k!} Y^k v_0, \quad\text{for } k\geq 0.
+\end{align}
+
+\Todo{more stuff here...}
+
+\section{Root Space Decomposition}
+\label{sec:root_space_decomposition}
+
+Let $\LieG$ be a semisimple Lie algebra.
+
+\begin{definition}
+    A Lie subalgebra $\Lie t \subset \Lie g$ is \emph{toral} if it contains only semisimple elements.
+\end{definition}
+
+\begin{insight}
+    Where is the torus in the toral Lie algebra? 
+\end{insight}
+
+\begin{lemma} 
+    Toral subalgebras exist.
+\end{lemma}
+\begin{proof}
+    Every element $x\in \LieG$ can be decomposed as into nilpotent and semisimple parts $x=x_s + x_n$, which are also in $\LieG$. 
+    If there was no semisimple element in $\LieG$, that is, if all the elements were nilpotent then $\LieG$ would be a nilpotent Lie algebra (by Engel's theorem). A semisimple Lie algebra can not be nilpotent (since nilpotent implies solvable). So, there exists some subalgebra (span of the semisimple elements) which is toral.
+\end{proof}
+
+\begin{lemma}
+    A toral subalgebra is abelian.
+    \label{lemma:toralsubalgebra_abelian}
+\end{lemma}
+\begin{proof}
+    Let $\Lie t \subset \Lie g$ be a toral subalgebra. We need to show that $\ad_{\Lie t} x=0 $ for all $x\in \Lie t$. Since $x\in \Lie t$ is semisimple, $\ad_\Lie t x$ is semisimple and thus diagonalizable ($\FF$ is an algebraically closed field). If $\ad_\Lie t x \neq 0$, then it has linearly independent eigenvectors that span $\Lie t$. We need to show that all the eigenvalues are zero. Assume, on the contrary, that there is some non-zero $v\in \Lie t$ such that $\ad_\Lie t x (v)=av$ with $a\neq 0$. Now, notice that 
+    \begin{align}
+        \ad_\Lie t v(\ad_\Lie t v(x))=-a[y,y]=0
+    \end{align} 
+    and so $\ad_\Lie t v(x)$ is an eigenvector of $\ad_\Lie t v$ with eigenvector $0$. Since $v$ is semisimple,so is $\ad_\Lie t v$ and thus has eigenvectors that span the space. We can write $x$ as a linear combination of eigenvectors of $v$. Let $x=\sum_i a_i v_i$ where $\ad_\Lie t v (v_i)=\lambda_i v_i$ for $i=1,\dotsc,n$. Now
+    \begin{align}
+        \ad_\Lie t (\ad_t v(x))&= \ad_\Lie t (\sum_i a_i \lambda_i v_i) \\
+            &= \sum_i a_i \lambda_i^2 v_i. 
+    \end{align}
+    But this must be zero, which contradicts the linear independence of the eigenvectors.  
+\end{proof}
+
+\begin{insight}
+    What is the difference between Cartan subalgebras and maximal toral subalgebras?  \Todo{``Cartan subalgebra = maximal toral subalgebra'' is the correct definition only when $\Lie g$ is reductive.}
+\end{insight}
+
+\begin{definition}[Cartan subalgebra]
+    The maximal toral subalgebra  is called the Cartan subalgebra.
+\end{definition}
+
+\begin{insight}
+   For $\Lie {sl}(n,\FF)$, the maximal toral subalgebra is the set of all diagonal matrices.
+\end{insight}
+Let $\LieH$ be the Cartan subalgebra of $\LieG$. Since $\LieH$ is abelian (by lemma~\ref{lemma:toralsubalgebra_abelian}), 
+\begin{align}
+    [\ad_\Lie g H_1, \ad_\Lie g H_2] &= \ad_\Lie g [H_1, H_2] =0  \quad \forall H_1,\, H_2 \in \LieH.
+\end{align}
+So $\ad_\Lie g \Lie h$ is a commuting family of endomorphisms of $\LieG$. Therefore, $\ad_\LieG\LieH$ can be simultaneously diagonalized. In other words,
+\begin{align}
+    \LieG &= \bigoplus_{\alpha\in \LieH^*} \LieG_\alpha \\
+    \text{with}\quad \LieG_\alpha &= \{x\in \LieG\ |\ \ad_\LieG h (x)=\alpha(h)x \quad\forall h\in \LieH\}.
+\end{align}
+
+Notice that $\LieG_0 = \{x\in\LieG\ |\ [\LieH,x] = 0 \forall x\in\LieG\} = C_\LieG(\LieH)$, the \defn{centralizer} of $\LieH$. 
+\begin{insight}
+    The centralizer of a subset is the set of all elements in the group which commute with all the elements in the subset.
+\end{insight}
+
+The set of all nonzero $\alpha\in\LieH^*$ for which $\LieG_\alpha \neq 0$ are called \defn{roots} of $\LieG$ relative to $\LieH$. We thus have the \defn{root space decomposition} or \defn{Cartan decomposition}: 
+\begin{align}
+    (*): \LieG &= C_\LieG(\LieH) \oplus \coprod_{\alpha\in\Phi} \LieG_\alpha
+\end{align}
+
